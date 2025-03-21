@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINDORA</title>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--Css-->
+    <link rel="stylesheet" href="proje.css">
+</head>
+<body>
+   <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">logo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <!-- Sol taraftaki menüler -->
+            <ul class="navbar-nav">
+                <li class="nav-item active"><a class="nav-link" href="#">Anasayfa</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Kayıp Eşya Bildir</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Bulunan Eşyalar</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">İletişim</a></li>
+            </ul>
+
+            <!-- SADECE DROPDOWN'I SAĞA ALIYORUZ -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Giriş Yap
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Üye Girişi</a>
+                        <a class="dropdown-item" href="#">Kayıt Ol</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+      <section class="hero text-center">
+        <h1>Kayıp Eşyalarınızı Hızla Bulun!</h1>
+        <p>FINDORA, kayıp eşyalarınızı bulmanıza ve başkalarına yardımcı olmanıza olanak tanır.</p>
+        <input type="text" placeholder="Ne arıyorsunuz?" class="search-box">
+        <button class="btn btn-primary">Hemen Kayıp Eşya Bildir</button>
+    </section>
+    
+
+    <section class="how-it-works">
+        <h2>FINDORA Nasıl Çalışır?</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="icon">📸</div>
+                <h3>1. Eşyanızı Yükleyin</h3>
+                <p>Kayıp veya bulunan eşyanın fotoğrafını ekleyin.</p>
+            </div>
+            <div class="step">
+                <div class="icon">🧠</div>
+                <h3>2. Sistem Eşleştirme Yapar</h3>
+                <p>Gelişmiş görüntü işleme ile benzer eşyalar bulunur.</p>
+            </div>
+            <div class="step">
+                <div class="icon">📩</div>
+                <h3>3. Bildirim Alın</h3>
+                <p>Eşleşen bir eşya bulunduğunda anında bilgilendirilirsiniz.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Kullanıcı yorumları</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Gizem O.
+                        </h5>
+                        <p class="card-text">
+                        Site çok yardımcı oldu.Kaybolan eşyamı hızlıca buldum.
+                        </p>
+                        <div>
+                        <span class="star">&#9733</span>
+                        <span class="star">&#9733</span>
+                        <span class="star">&#9733</span>
+                        <span class="star">&#9734</span>
+                        <span class="star">&#9734</span>
+                        </div>
+                        <br>
+                        <footer class="blockquote-footer">10 Mart 2025</footer>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    
+     <!--Footer-->
+  <footer class="text-center py-3">
+    <div class="footer-content">
+      <div>
+        <p>
+        <h2>FINDORA</h2>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üremek için buradayız.
+        Güvenli ve hızlı işlem yapabilmeniz için sürekli gelişiyoruz.
+        </p>
+
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-youtube"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-info">
+        <p><a href="https://maps.app.goo.gl/JAvQhj4ZsP8UwQrS9" target="_blank"></a><i
+            class="bi bi-geo-alt"></i>Trabzon,Türkiye</p>
+        <p><i class="bi bi-telephone"></i>+90 123 456 7890</p>
+        <p><i class="bi bi-envelope-at"></i>info@equalworld.org</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Tüm Hakları Saklıdır</p>
+    </div>
+  </footer>
+
+  <!--Footer End-->
+
+      <!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
