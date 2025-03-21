@@ -1,0 +1,208 @@
+body{
+    overflow-x: hidden;
+}
+/* Navbar Arkaplan Rengi ve Gölgelendirme */
+.navbar {
+    min-height: 80px;
+    background-color: #7981ecbe !important; /* Özel arka plan rengi */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+}
+
+/* Navbar Bağlantıları Stili */
+.navbar-nav .nav-link {
+    color: #333 !important; /* Yazı rengi */
+    font-weight: 600; /* Kalın yazı */
+    transition: color 0.3s ease-in-out; /* Yumuşak renk geçişi */
+}
+
+/* Hover (Üzerine gelindiğinde) */
+.navbar-nav .nav-link:hover {
+    color: #555 !important; /* Koyu gri ton */
+}
+
+/* Aktif Link */
+.navbar-nav .nav-item.active .nav-link {
+    color: #000 !important; /* Aktif sayfa vurgusu */
+    border-bottom: 2px solid #333; /* Alt çizgi */
+}
+
+/* Dropdown Menü Stili */
+.dropdown-menu {
+    background-color: #6ca9e7; /* Açık gri arka plan */
+    border-radius: 8px;
+    border: none;
+}
+.dropdown-menu {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* Dropdown Menü Öğeleri */
+.dropdown-menu .dropdown-item {
+    color: #333 !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #e2e6ea; /* Hover efekti */
+}
+
+
+.hero {
+    background: url('hero-background.jpg') center/cover;
+    padding: 80px 20px;
+    color: white;
+}
+
+.search-box {
+    padding: 10px;
+    width: 50%;
+    border-radius: 5px;
+}
+
+
+.how-it-works {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+}
+
+.how-it-works h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step {
+    background: white;
+    padding: 20px;
+    width: 280px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.step h3 {
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 16px;
+    color: #555;
+}
+
+
+.testimonial {
+    background: #fff3cd;
+    padding: 15px;
+    border-left: 5px solid #ffa502;
+}
+
+
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stars-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.star{
+    font-size: 2em;
+    color: gold;
+}
+
+
+/* Footer genel stil */
+footer {
+    background-color: #8285f3be;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(202, 71, 189, 0.3);
+  }
+  
+  .footer-content {
+    max-width: 1200px; /* İçeriğin genişliğini belirledik */
+    margin: 0 auto; /* Ortalamak için */
+  }
+  .footer-content div {
+    padding: 6px;
+  }
+  
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border-top: 2px dashed #830808; /* Ayırıcı çizgi */
+    padding-top: 10px; /* Çizgi ile içerik arasına boşluk ekler */
+    transition: transform 1s ease-in-out;
+  }
+  
+  .social-icons a {
+    color: #333;
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: 12px;
+    margin-left: 5px;
+  }
+  
+  .social-icons a:hover {
+    color: #830808;
+    transform: scale(1.08);
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-weight: bold;
+  }
+  .contact-info i {
+    font-size: 30px;
+    margin-right: 10px;
+    transition: transform 1s ease-in-out;
+  }
+  
+  .contact-info i:hover {
+    color: #830808;
+    transform: scale(1.08);
+  }
+  
+  .copyright {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  /*footer bitiş*/
+  
