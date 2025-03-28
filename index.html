@@ -1,19 +1,27 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINDORA</title>
-    <!--Bootstrap-->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--Css-->
-    <link rel="stylesheet" href="proje.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Özel CSS -->
+    <link rel="stylesheet" href="css\proje.css">
 </head>
 <body>
-   <!-- Navbar -->
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">logo</a>
+        <a class="navbar-brand" href="#">
+            <img src="images\logo.png" alt="FINDORA Logosu" height="75">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,7 +37,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">İletişim</a></li>
             </ul>
 
-            <!-- SADECE DROPDOWN'I SAĞA ALIYORUZ -->
+            <!-- Dropdown -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -44,16 +52,45 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav>  
 
-      <section class="hero text-center">
-        <h1>Kayıp Eşyalarınızı Hızla Bulun!</h1>
-        <p>FINDORA, kayıp eşyalarınızı bulmanıza ve başkalarına yardımcı olmanıza olanak tanır.</p>
-        <input type="text" placeholder="Ne arıyorsunuz?" class="search-box">
-        <button class="btn btn-primary">Hemen Kayıp Eşya Bildir</button>
-    </section>
-    
+    <!-- Slider Başlangıcı -->
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images\slider1.jpg" alt="Test Resim" width="500" height="400">
 
+                <div class="slide-content">
+                    <h2>Findora'ya Hoş Geldiniz!</h2>
+                    <p>Kaybolan eşyalarınızı kolayca bulun, güvenle geri alın.</p>
+                    <a href="#" class="btn">Hemen Başla</a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="images\slider2.jpg" alt="Test Resim" width="500" height="400">
+                <div class="slide-content">
+                    <h2>Bulunan Eşyalarınızı Paylaşın</h2>
+                    <p>Bulduğunuz eşyaları paylaşarak kaybolanlara yardımcı olun.</p>
+                    <a href="#" class="btn">Kayıp Eşya Bildirin</a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="images\slider3.jpg" alt="Test Resim" width="500" height="400">
+                <div class="slide-content">
+                    <h2>Her Eşya Bulunduğunda Bir Hikaye Başlar</h2>
+                    <p>Kaybolan eşyalarınızı bulmak hiç bu kadar kolay olmamıştı.</p>
+                    <a href="#" class="btn">Geri Bildirimler</a>
+                </div>
+            </div>
+        </div>
+        <!-- Slider Navigasyon -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <!-- Sayfa Göstergeleri -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Nasıl Çalışır? -->
     <section class="how-it-works">
         <h2>FINDORA Nasıl Çalışır?</h2>
         <div class="steps-container">
@@ -63,83 +100,225 @@
                 <p>Kayıp veya bulunan eşyanın fotoğrafını ekleyin.</p>
             </div>
             <div class="step">
-                <div class="icon">🧠</div>
+                <div class="icon">🔍</div>
                 <h3>2. Sistem Eşleştirme Yapar</h3>
                 <p>Gelişmiş görüntü işleme ile benzer eşyalar bulunur.</p>
             </div>
             <div class="step">
-                <div class="icon">📩</div>
+                <div class="icon">📲</div>
                 <h3>3. Bildirim Alın</h3>
                 <p>Eşleşen bir eşya bulunduğunda anında bilgilendirilirsiniz.</p>
             </div>
         </div>
     </section>
 
-    <section class="container my-5">
-        <h2 class="text-center mb-4">Kullanıcı yorumları</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            Gizem O.
-                        </h5>
-                        <p class="card-text">
-                        Site çok yardımcı oldu.Kaybolan eşyamı hızlıca buldum.
-                        </p>
-                        <div>
-                        <span class="star">&#9733</span>
-                        <span class="star">&#9733</span>
-                        <span class="star">&#9733</span>
-                        <span class="star">&#9734</span>
-                        <span class="star">&#9734</span>
-                        </div>
-                        <br>
-                        <footer class="blockquote-footer">10 Mart 2025</footer>
-
-                    </div>
-
+        <!-- Kullanıcı Yorumları -->
+        <section class="container my-5">
+            <h2>Kullanıcı Yorumları</h2>
+            
+            <!-- Yorumlar kısmı -->
+            <div class="yorum-container">
+                <div class="scroll-btn left" id="leftBtn">
+                    &lt;
                 </div>
-
+                <div class="yorum-wrapper">
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Zehra A.</h5>
+                            <p class="card-text">Harika bir platform olmuş!Kullanıcı arayüzü çok sade ve anlaşılır.Kayıp eşyaları bulmak için kesinlikle çok faydalı
+                                olacak.Emeği geçen herkese çok teşekkürler!</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                            </div>
+                            <footer class="blockquote-footer">20 Mart 2025</footer>
+                        </div>
+                    </div>
+        
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Gizem O.</h5>
+                            <p class="card-text">Yeni açılmış bir platform olmasına rağmen gayet başarılı.Daha fazla kişi kullanmaya başlarsa çok daha faydalı olacak.Başarılar dilerim.</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9734;</span>
+                            </div>
+                            <footer class="blockquote-footer">14 Mart 2025</footer>
+                        </div>
+                    </div>
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Ahmet T.</h5>
+                            <p class="card-text">Sayfa çok iyi ama bazen giriş yaparken hata alıyorum.'Bağlantı zaman aşımına uğradı.' uyarısı geliyor.Bu konuda bir güncelleme yaparsanız süper olur.</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9734;</span>
+                            </div>
+                            <footer class="blockquote-footer">8 Mart 2025</footer>
+                        </div>
+                    </div>
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Emre F.</h5>
+                            <p class="card-text">Bu site sayesinde kaybolan cüzdanımı bulan kişiyle iletişime geçebildim.Böyle bir hizmet sunduğunuz için teşekkürler.</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9734;</span>
+                            </div>
+                            <footer class="blockquote-footer">2 Mart 2025</footer>
+                        </div>
+                    </div>
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Zeynep A.</h5>
+                            <p class="card-text">Kaybolan eşya takibim çok kolaylaştı.Fotoğraf yüklemek ve eşya hakkında bilgi vermek çok pratik,sistem hemen eşleşmeyi yapıp beni bilgilendirdi.Gerçekten harika bir hizmet.</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9734;</span>
+                            </div>
+                            <footer class="blockquote-footer">23 Şubat 2025</footer>
+                        </div>
+                    </div>
+        
+                    <div class="yorum-karti">
+                        <div class="card-body">
+                            <h5 class="card-title">Sena K.</h5>
+                            <p class="card-text">Bugün bankta unutulmuş bir çanta buldum ve hemen siteye yükledim.Kısa sürede kaybeden kişiye ulaştım ve o da çantasına kavuştu.</p>
+                            <div>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                                <span class="star">&#9733;</span>
+                            </div>
+                            <footer class="blockquote-footer">18 Şubat 2025</footer>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Sağ Ok -->
+            <div class="scroll-btn right" id="rightBtn">
+                &gt;
             </div>
+            </div>
+        </section>
 
+    <!-- Sıkça Sorulan Sorular -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Sık Sorulan Sorular</h2>
+        <div class="sss-container">
+            <div class="soru">
+                <button class="soru-baslik">Kayıp eşya nasıl ilan edilir?</button>
+                <div class="soru-cevap">
+                    <p>Kayıp eşyanızı ilan etmek için web sitemize üye olup, "Kayıp İlanı Ver" sayfasından gerekli bilgileri doldurmanız yeterlidir.</p>
+                </div>
+            </div>
+            <div class="soru">
+                <button class="soru-baslik">Kayıp eşya bildirimini nasıl silebilirim?</button>
+                <div class="soru-cevap">
+                    <p>Hesabınıza giriş yaparak "İlanlarım" bölümüne gidin ve silmek istediğiniz ilanı seçerek kaldırabilirsiniz.</p>
+                </div>
+            </div>
+            
+            <div class="soru">
+                <button class="soru-baslik">Kayıp eşyamı başka biri almışsa ne yapabilirim?</button>
+                <div class="soru-cevap">
+                    <p>Bu gibi durumlarda platform üzerinden iletişim bilgilerini kontrol edebilir ve gerekirse destek ekibimize başvurabilirsiniz.</p>
+                </div>
+            </div>
+            
+            <div class="soru">
+                <button class="soru-baslik">Eşya teslimatı sırasında dikkat edilmesi gerekenler nelerdir?</button>
+                <div class="soru-cevap">
+                    <p>Güvenli bir teslimat için halka açık bir yerde buluşmanızı öneririz. Ayrıca, karşı tarafın kimliğini doğrulamayı unutmayın.</p>
+                </div>
+            </div>
+            <div class="soru">
+                <button class="soru-baslik">FINDORA ücretli mi?</button>
+                <div class="soru-cevap">
+                    <p>Hayır, FINDORA tamamen ücretsizdir. Kayıp ve bulunan eşyalarla ilgili ilan vermek veya arama yapmak için herhangi bir ücret ödemezsiniz.</p>
+                </div>
+            </div>
+            
+            <div class="soru">
+                <button class="soru-baslik">Hangi tür eşyalar platformda paylaşılamaz?</button>
+                <div class="soru-cevap">
+                    <p>Tehlikeli maddeler, yasa dışı ürünler ve kişisel belgeler gibi eşyaların paylaşımı yasaktır. Daha fazla bilgi için kullanım koşullarımızı inceleyin.</p>
+                </div>
+            </div>
+            
+            <div class="soru">
+                <button class="soru-baslik">Bulunan eşyaları nasıl görebilirim?</button>
+                <div class="soru-cevap">
+                    <p>"Bulunan Eşyalar" sayfasından tüm bulunan eşyaların listesine ulaşabilirsiniz. Arama filtrelerini kullanarak aradığınız eşyayı kolayca bulabilirsiniz.</p>
+                </div>
+            </div>
+            <div class="soru">
+                <button class="soru-baslik">İlanım ne kadar süreyle yayında kalır?</button>
+                <div class="soru-cevap">
+                    <p>Kayıp ilanınız, eşyanız bulunana kadar veya sizin tarafınızdan kaldırılana kadar yayında kalır.</p>
+                </div>
+            </div>
+            <div class="soru">
+                <button class="soru-baslik">Bulduğum eşyayı nasıl sahibine ulaştırabilirim?</button>
+                <div class="soru-cevap">
+                    <p>Bulduğunuz eşyanın ilan sayfasında bulunan iletişim bilgileri aracılığıyla eşya sahibine ulaşabilirsiniz.</p>
+                </div>
+            </div>
         </div>
     </section>
     
-     <!--Footer-->
-  <footer class="text-center py-3">
-    <div class="footer-content">
-      <div>
-        <p>
-        <h2>FINDORA</h2>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üremek için buradayız.
-        Güvenli ve hızlı işlem yapabilmeniz için sürekli gelişiyoruz.
-        </p>
+    <!--Footer-->
+    <footer class="text-center py-3">
+        <div class="footer-content">
+        <div>
+            <p>
+            <h2>FINDORA</h2>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üremek için buradayız.
+            Güvenli ve hızlı işlem yapabilmeniz için sürekli gelişiyoruz.
+            </p>
 
-        <div class="social-icons">
-          <a href="#"><i class="bi bi-facebook"></i></a>
-          <a href="#"><i class="bi bi-twitter-x"></i></a>
-          <a href="#"><i class="bi bi-youtube"></i></a>
-          <a href="#"><i class="bi bi-instagram"></i></a>
-          <a href="#"><i class="bi bi-linkedin"></i></a>
+            <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-youtube"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+            </div>
         </div>
-      </div>
 
-      <div class="contact-info">
-        <p><a href="https://maps.app.goo.gl/JAvQhj4ZsP8UwQrS9" target="_blank"></a><i
-            class="bi bi-geo-alt"></i>Trabzon,Türkiye</p>
-        <p><i class="bi bi-telephone"></i>+90 123 456 7890</p>
-        <p><i class="bi bi-envelope-at"></i>info@equalworld.org</p>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2025 Tüm Hakları Saklıdır</p>
-    </div>
-  </footer>
+        <div class="contact-info">
+            <p><a href="https://maps.app.goo.gl/JAvQhj4ZsP8UwQrS9" target="_blank"></a><i
+                class="bi bi-geo-alt"></i>Trabzon,Türkiye</p>
+            <p><i class="bi bi-telephone"></i>+90 554 514 1224</p>
+            <p><i class="bi bi-envelope-at"></i>findora_help@hotmail.com</p>
+        </div>
+        </div>
+        <div class="copyright">
+        <p>&copy; 2025 Tüm Hakları Saklıdır</p>
+        </div>
+    </footer>
 
-  <!--Footer End-->
-
-      <!-- Bootstrap JS -->
+<!-- Diğer script'ler -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Kendi script'lerimiz -->
+<script src="js\oklar.js"></script>
+<script src="js\proje.js"></script>
 
 </body>
 </html>
