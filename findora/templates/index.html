@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -10,18 +10,17 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Özel CSS -->
-    <link rel="stylesheet" href="css\proje.css">
-
+    <link rel="stylesheet" href="{% static 'css/proje.css' %}">
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="images\logo.png" alt="FINDORA Logosu" height="75">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="FINDORA Logosu" height="75">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +30,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <!-- Sol taraftaki menüler -->
             <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="#">Anasayfa</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Kayıp Eşya Bildir</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Bulunan Eşyalar</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
@@ -47,7 +46,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Üye Girişi</a>
-                        <a class="dropdown-item" href="#">Kayıt Ol</a>
+                        <a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a>
                     </div>
                 </li>
             </ul>
@@ -59,16 +58,16 @@
     <div class="swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="images\slider1.jpg" alt="Test Resim" width="500" height="400">
+                <img src="{% static 'images\slider1.jpg' %}" alt="Test Resim" width="500" height="400">
 
                 <div class="slide-content">
                     <h2>Findora'ya Hoş Geldiniz!</h2>
                     <p>Kaybolan eşyalarınızı kolayca bulun, güvenle geri alın.</p>
-                    <a href="#" class="btn">Hemen Başla</a>
+                    <a href="{% url 'register' %}" class="btn">Hemen Başla</a>
                 </div>
             </div>
             <div class="swiper-slide">
-                <img src="images\slider2.jpg" alt="Test Resim" width="500" height="400">
+                <img src="{% static 'images\slider2.jpg' %}" alt="Test Resim" width="500" height="400">
                 <div class="slide-content">
                     <h2>Bulunan Eşyalarınızı Paylaşın</h2>
                     <p>Bulduğunuz eşyaları paylaşarak kaybolanlara yardımcı olun.</p>
@@ -76,7 +75,7 @@
                 </div>
             </div>
             <div class="swiper-slide">
-                <img src="images\slider3.jpg" alt="Test Resim" width="500" height="400">
+                <img src="{% static 'images\slider3.jpg' %}" alt="Test Resim" width="500" height="400">
                 <div class="slide-content">
                     <h2>Her Eşya Bulunduğunda Bir Hikaye Başlar</h2>
                     <p>Kaybolan eşyalarınızı bulmak hiç bu kadar kolay olmamıştı.</p>
@@ -318,8 +317,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Kendi script'lerimiz -->
-<script src="js\oklar.js"></script>
-<script src="js\proje.js"></script>
+<script src="{% static 'js/oklar.js' %}"></script>
+<script src="{% static 'js/proje.js' %}"></script>
 
 </body>
 </html>
