@@ -14,10 +14,10 @@
         {% if user.is_authenticated %}
             <h1>Hoşgeldiniz, {{ user.username }}!</h1>
             <p>Bu, giriş yaptıktan sonra görüntülenen ana sayfadır.</p>
-            <a href="#" class="btn btn-danger">Çıkış Yap</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Çıkış Yap</a>
         {% else %}
             <p>Lütfen giriş yapın.</p>
-            <a href="#" class="btn btn-primary">Giriş Yap</a>
+            <a href="{% url 'login' %}" class="btn btn-primary">Giriş Yap</a>
         {% endif %}
     </div>
 

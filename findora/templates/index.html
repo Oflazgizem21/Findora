@@ -39,16 +39,27 @@
 
             <!-- Dropdown -->
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        Giriş Yap
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Üye Girişi</a>
-                        <a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a>
-                    </div>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hoşgeldiniz, {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Profilim</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Giriş Yap
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Üye Girişi</a></li>
+                            <li><a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
