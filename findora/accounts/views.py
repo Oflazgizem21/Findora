@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import  authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import CustomUserCreationForm 
+from .forms import CustomUserCreationForm , CustomLoginForm
 
 #Ana Sayfaya Dönme Fonksiyonu
 def home(request):
@@ -18,4 +18,22 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+#Giriş Yap Fonksiyorunu
+def user_login(request):
+    if request.method == 'POST':
+        form = CustomLoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Giriş başarılı!')
+                return redirect('home')
+        else:
+            messages.error(request, 'Kullanıcı adı veya şifre hatalı.')
+    else:
+        form = CustomLoginForm()
+    return render(request, 'login.html', {'form': form})
 
