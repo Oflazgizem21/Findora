@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import CustomUserCreationForm , CustomLoginForm
 
@@ -37,3 +37,8 @@ def user_login(request):
         form = CustomLoginForm()
     return render(request, 'login.html', {'form': form})
 
+#Çıkış Yap Fonksiyonu
+def user_logout(request):
+    logout(request)  # Kullanıcının oturumunu sonlandır
+    messages.success(request, 'Başarıyla çıkış yapıldı.')
+    return redirect('home')
