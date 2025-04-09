@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - FINDORA</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #87CEFA;
+            color: white;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #008cba 3px solid;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .contact-section {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .contact-section h2 {
+            text-align: center;
+            color: #333;
+        }
+        .contact-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .contact-box {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            width: 30%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .contact-box i {
+            font-size: 40px;
+            color: #008cba;
+        }
+        .contact-form {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background: #008cba;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .contact-form button:hover {
+            background: #005f8a;
+        }
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FINDORA - İletişim</h1>
+    </header>
+
+    <div class="container">
+        <div class="contact-section">
+            <h2>Bize Ulaşın</h2>
+            <p>Herhangi bir sorunuz varsa aşağıdaki iletişim kanallarından veya formu doldurarak bize ulaşabilirsiniz.</p>
+        </div>
+
+        <div class="contact-details">
+            <div class="contact-box">
+                <i class="fas fa-envelope"></i>
+                <h3>E-Posta</h3>
+                <p>destek@findora.com</p>
+            </div>
+            <div class="contact-box">
+                <i class="fas fa-phone"></i>
+                <h3>Telefon</h3>
+                <p>+90 555 123 4567</p>
+            </div>
+            <div class="contact-box">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Adres</h3>
+                <p>Trabzon, Türkiye</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Bize Mesaj Gönderin</h2>
+            <form>
+                <input type="text" name="name" placeholder="Adınız" required>
+                <input type="email" name="email" placeholder="E-Posta Adresiniz" required>
+                <textarea name="message" rows="5" placeholder="Mesajınız" required></textarea>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FINDORA - Tüm Hakları Saklıdır.</p>
+    </footer>
+
+</body>
+</html>
