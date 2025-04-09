@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - FINDORA</title>
+    <link rel="stylesheet" href="{% static 'css/proje.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Font Awesome CDN -->
+  <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script>
+  <!--Css-->
+  <link rel="stylesheet" href="{% static 'css/proje.css' %}">
+  
+  <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+
+
+
+</head>
+<body>
+
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'images\logo.png' %}" alt="Logo" width="100">
+    </a>
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <!-- Sol taraftaki menüler -->
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'iletisim'%}">İletişim</a></li>
+                </ul>
+    
+                
+    
+    <!-- Sağ taraftaki kullanıcı menüsü -->
+    <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hoşgeldiniz, {{ user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#">Profilim</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
+                </ul>
+            </li>
+        {% else %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Giriş Yap
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Üye Girişi</a></li>
+                    <li><a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a></li>
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+    </div>
+    </div>
+    </nav>
+    
+
+    <div class="hakkimizda-container">
+        <div class="hakkimizda-about-section">
+            <h2>Biz Kimiz?</h2>
+            <p>FINDORA, kaybolan eşyaların bulunmasını kolaylaştıran bir platformdur. Kullanıcılar arasında güvenli bir köprü oluşturarak kaybolan eşyaların sahiplerine ulaşmasını sağlıyoruz.</p>
+        </div>
+
+        <div class="hakkimizda-cards">
+            <div class="hakkimizda-card">
+                <i class="fas fa-search"></i>
+                <h3>Kolay Arama</h3>
+                <p>Kayıp eşyalarınızı kolayca arayabilir ve filtreleme seçenekleriyle hızlıca bulabilirsiniz.</p>
+            </div>
+            <div class="hakkimizda-card">
+                <i class="fas fa-handshake"></i>
+                <h3>Güvenli İletişim</h3>
+                <p>Kullanıcılar arasında güvenli bir mesajlaşma ve doğrulama süreci sunuyoruz.</p>
+            </div>
+            <div class="hakkimizda-card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Konum Bazlı Destek</h3>
+                <p>Eşyalarınızı en yakın lokasyondan arayarak kolayca ulaşabilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+
+      
+
+    <div class="container py-4">
+        <div class="row justify-content-center g-4">
+          
+          <!-- Gizem (Takım Kaptanı) -->
+          <div class="col-md-4 col-sm-6">
+            <div class="card team-card text-center">
+              <img src="{% static 'images/gizem.jpg' %}" class="team-img" alt="Gizem">
+              <div class="card-body">
+                <div class="team-name">Gizem Oflaz</div>
+                <p class="team-role">Backend Geliştirici</p>
+                <div class="social-links">
+                  <a href="https://www.linkedin.com/in/gizem" target="_blank" class="fab fa-linkedin"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Zeynep (Kod Kontrolcüsü) -->
+          <div class="col-md-4 col-sm-6">
+            <div class="card team-card text-center">
+              <img src="{% static 'images/zeynep.jpg' %}" class="team-img" alt="Zeynep">
+              <div class="card-body">
+                <div class="team-name">Zeynep Türkan Aytaç</div>
+                <p class="team-role">Backend Geliştirici</p>
+                <div class="social-links">
+                  <a href="https://www.linkedin.com/in/zeynep" target="_blank" class="fab fa-linkedin"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Özlem (Frontend Geliştirici) -->
+          <div class="col-md-4 col-sm-6">
+            <div class="card team-card text-center">
+              <img src="{% static 'images/ozlem.jpg' %}" class="team-img" alt="Özlem">
+              <div class="card-body">
+                <div class="team-name">Özlem Özdemirci</div>
+                <p class="team-role">Frontend Geliştirici</p>
+                <div class="social-links">
+                  <a href="https://www.linkedin.com/in/ozlem" target="_blank" class="fab fa-linkedin"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+<!-- Footer -->
+<footer class="text-center py-3">
+    <div class="footer-content">
+        <div>
+            <h2>FINDORA</h2>
+            <p>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üretmek için buradayız.</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61573319105115"><i class="bi bi-facebook"></i></a>
+                <a href="https://x.com/zeynepturkan_61"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.youtube.com/@turkan61"><i class="bi bi-youtube"></i></a>
+                <a href="https://www.instagram.com/zeynep61turkan/"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/zeynep-t%C3%BCrkan-ayta%C3%A7-42a396328/"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="contact-info">
+            <p><i class="bi bi-geo-alt"></i> Trabzon, Türkiye</p>
+            <p><i class="bi bi-telephone"></i> +90554 514 1224</p>
+            <p><i class="bi bi-envelope-at"></i> findora_help@hotmail.com </p>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2025 Tüm Hakları Saklıdır</p>
+    </div>
+</footer>
+<!-- Footer End -->
+
+   <!-- ✅ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/YOUR_KIT_ID.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
+
+
