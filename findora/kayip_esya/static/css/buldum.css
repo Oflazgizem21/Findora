@@ -1,0 +1,87 @@
+/* Sayfanın tamamını ortala ve hoş bir arkaplan rengi ekle */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-image: url('/static/images/buldum_arkaplan.jpg'); /* Arka plan resmi */
+    background-size: cover; /* Resmin tüm ekranı kaplamasını sağlar */
+    background-position: center; /* Resmi ortalar */
+    background-repeat: no-repeat; /* Resmin tekrarlanmamasını sağlar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Formu ortalayarak güzel bir kart görünümü ver */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Başlık stilini biraz daha belirgin yap */
+h1 {
+    color: #333;
+}
+
+/* Form alanlarını düzenle */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block; /* Etiketin bir satırı kaplamasını sağlar */
+    text-align: left;
+    margin-bottom: 5px; /* Etiket ile input arasına boşluk ekler */
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%; /* Input ve select alanları tüm genişliği kaplasın */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
+}
+
+/* Buton tasarımını güzelleştir */
+.btn {
+    background-color: #f0afe7;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #30968a;
+}
+
+/* Dosya seçme alanı için stil */
+.file-input-container {
+    margin-bottom: 20px;
+}
+
+.file-input-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.file-input-container input[type="file"] {
+    width: 100%;
+}
+
+.file-input-container span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #777;
+}

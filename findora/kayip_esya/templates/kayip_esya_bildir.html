@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINDORA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Özel CSS -->
+    <link rel="stylesheet" href="{% static 'css/kayip_esya_bildir.css'%}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="FINDORA Logosu" height="75">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <!-- Sol taraftaki menüler -->
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'iletisim' %}">İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Sayfa içeriği -->
+    <div class="container text-center mt-5">
+        <h1>📢 Kayıp Eşya Bildir</h1>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="{% url 'buldum' %}" class="btn btn-primary">BULDUM</a>
+            <a href="{% url 'kaybettim' %}" class="btn btn-secondary">KAYBETTİM</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0d5f8a9cfdf87f2ab604495d9a9b8b949a9c81075c83ff6252ff6ac68e44d240" crossorigin="anonymous"></script>
+</body>
+</html>

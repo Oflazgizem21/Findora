@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaybettim</title>
+    <link rel="stylesheet" href="{% static 'css/buldum.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Buldum</h1>
+        <form method="post" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+          
+            <!-- Eşya Tanımı -->
+            <div class="form-group">
+                <label for="id_description">Eşya Tanımı:</label>
+                {{ form.tanim }}
+            </div>
+          
+            <!-- Eşya Türü Kısmı -->
+            <div class="form-group">
+                <label for="id_tur">Eşya Türü:</label>
+                <select id="id_tur" name="tur" class="form-select" onchange="toggleCustomInput('tur')">
+                    <option value="" selected disabled>Seçiniz...</option>
+                    {% for value, label in form.tur.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <div id="custom_tur_box" style="display:none; margin-top: 10px;">
+                    <input type="text" id="id_custom_tur" name="custom_tur" class="form-input" placeholder="Örnek: Kemer, Gözlük...">
+                </div>
+            </div>
+
+            <!-- Eşya Rengi Kısmı -->
+            <div class="form-group">
+                <label for="id_renk">Eşya Rengi:</label>
+                <select id="id_renk" name="renk" class="form-select" onchange="toggleCustomInput('renk')">
+                    <option value="" selected disabled>Seçiniz...</option>
+                    {% for value, label in form.renk.field.choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <div id="custom_renk_box" style="display:none; margin-top: 10px;">
+                    <input type="text" id="id_custom_renk" name="custom_renk" class="form-input" placeholder="Örnek: Kahverengi, Aslanağzı...">
+                </div>
+            </div>           
+
+            <!-- Konum -->
+            <div class="form-group">
+                <label for="id_location">Konum:</label>
+                {{ form.konum }}
+            </div>
+          
+            <!-- Eşya Resmi -->
+            <div class="form-group file-input-container">
+                <label for="id_image">Eşya Resmi:</label>
+                {{ form.resim }}
+                <span>Bulduğunuz eşyanın resmini buraya yükleyiniz..</span>
+            </div>
+          
+            <button type="submit" class="btn">Kaydet</button>
+        </form>
+    </div>
+
+    <script>
+    // "Diğer" seçilince textbox göster
+    function toggleCustomInput(field) {
+        const select = document.getElementById(id_${field});
+        const customBox = document.getElementById(custom_${field}_box);
+        
+        if (select.value === 'diger') {
+            customBox.style.display = 'block';
+        } else {
+            customBox.style.display = 'none';
+        }
+    }
+
+    // Sayfa yüklendiğinde kontrol et (form geri döndüyse)
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleCustomInput('tur');
+        toggleCustomInput('renk');
+    });
+</script>
+</body>
+</html>
