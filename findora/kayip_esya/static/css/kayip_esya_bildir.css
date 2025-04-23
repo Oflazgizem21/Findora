@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("/static/images/arkaplan.jpg");
+    background-size: cover; /* Resmi ekranın tamamına yayar*/
+    background-position: top left; /* Resmi ortalar */
+    background-repeat: no-repeat; /* Resmin tekrar etmesini engeller */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 80px; /* Navbar'ın sayfanın üst kısmına sabitlenmesi için boşluk ekledik */
+}
+
+/* Navbar'ı sayfanın en üstüne sabitle */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgb(172, 109, 49)!important;;
+    box-shadow: 0px 4px 10px rgb(199, 128, 78);
+}
+
+.navbar-nav .nav-link {
+    font-weight: bold; /* Yazıyı kalın yapar */
+}
+
+
+.container {
+    background: white;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    margin-top: 100px;
+}
+
+h1 {
+    color: #333;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.btn {
+    flex: 1;
+    padding: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    background-size: cover; /* Resmin tüm ekranı kaplamasını sağlar */
+    background-position: center; /* Resmi ortalar */
+    background-repeat: no-repeat; /* Resmin tekrarlanmamasını sağlar */
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-image: url('/static/images/buldum_arkaplan.jpg'); /* BULDUM butonunun arka planı */
+}
+
+.btn-secondary {
+    background-image: url('/static/images/kaybettim_arkaplan.jpg'); /* KAYBETTİM butonunun arka planı */
+}
+
+.btn:hover {
+    background-color: #a2642a;
+}
+
+.btn-secondary:hover {
+    background-color: #6b4c0c;
+}
