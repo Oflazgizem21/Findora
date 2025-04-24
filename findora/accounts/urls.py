@@ -6,5 +6,4 @@ urlpatterns = [
     path('register/', register, name='register'),   # Kayıt olma sayfası
     path('login/', user_login, name='login'),      # Giriş yapma sayfası
     path('logout/', user_logout, name='logout'),   # Çıkış yapma sayfası
-
 ]

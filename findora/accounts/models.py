@@ -1,9 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
-#Kendi kullanıcı oluşturma metodlarımız tanımlanır
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **extra_fields):
+class CustomUserManager(BaseUserManager):   # Yeni kullanıcı oluşturur.
+    def create_user(self, email, username, password, **extra_fields):
         if not email:
             raise ValueError("Email alanı zorunludur")
         email = self.normalize_email(email)
@@ -12,8 +11,12 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-#Django'nun hazır kayıt oluşturma metodu override edilir
-class CustomUser(AbstractUser):
+    def create_superuser(self, email, username, password=None, **extra_fields):     # Yönetici (admin) kullanıcı oluşturur.
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, username, password, **extra_fields)
+
+class CustomUser(AbstractUser):     # Kullanıcı modelini özelleştiriyoruz.
     email = models.EmailField(unique=True)  
     birthdate = models.DateField(blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
@@ -22,5 +25,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['username']  
 
     objects = CustomUserManager()  #Özel UserManager ekledik
-    class Meta:
-        swappable = 'AUTH_USER_MODEL'
+
+    def __str__(self):
+        return self.email

@@ -31,10 +31,10 @@
             <!-- Sol taraftaki menüler -->
             <ul class="navbar-nav">
                 <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Kayıp Eşya Bildir</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Bulunan Eşyalar</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Hakkımızda</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">İletişim</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda'%}">Hakkımızda</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'iletisim' %}">İletişim</a></li>
             </ul>
 
             <!-- Dropdown -->
