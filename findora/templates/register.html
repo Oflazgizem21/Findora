@@ -25,40 +25,73 @@
         <div class="card p-4 shadow-lg" style="max-width: 500px; width: 100%; margin-left: 20px;">
             <h2 class="text-center mb-4">Kayıt Ol</h2>
 
-            <!-- Hata Mesajları -->
-            {% if form.errors %}
+            <!-- Genel Hata Kutusu -->
+            {% if form.non_field_errors %}
                 <div class="alert alert-danger">
-                    Lütfen formdaki hataları düzeltin.
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
                 </div>
             {% endif %}
 
             <!-- Kayıt Formu -->
-            <form method="post">
+            <form method="POST" novalidate>
                 {% csrf_token %}
+
+                <!-- Kullanıcı Adı -->
                 <div class="mb-3">
                     <label for="id_username" class="form-label">Kullanıcı Adı:</label>
                     {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
+                <!-- Tam Ad -->
                 <div class="mb-3">
                     <label for="id_full_name" class="form-label">Tam Adınız:</label>
                     {{ form.full_name }}
+                    {% for error in form.full_name.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
+                <!-- E-Posta -->
                 <div class="mb-3">
                     <label for="id_email" class="form-label">E-posta:</label>
                     {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
+                <!-- Doğum Tarihi -->
                 <div class="mb-3">
                     <label for="id_birthdate" class="form-label">Doğum Tarihi:</label>
                     {{ form.birthdate }}
+                    {% for error in form.birthdate.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
+                <!-- Şifre -->
                 <div class="mb-3">
                     <label for="id_password1" class="form-label">Şifre:</label>
                     {{ form.password1 }}
+                    {% for error in form.password1.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
+                <!-- Şifre Tekrar -->
                 <div class="mb-3">
                     <label for="id_password2" class="form-label">Şifre Tekrar:</label>
                     {{ form.password2 }}
+                    {% for error in form.password2.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
                 </div>
+
                 <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
             </form>
 
@@ -67,9 +100,7 @@
                 Zaten üye misiniz? <a href="{% url 'login' %}">Üye Girişi</a>
             </p>
         </div>
-        
     </div>
-
 </div>
 
 <!-- Bootstrap JS -->

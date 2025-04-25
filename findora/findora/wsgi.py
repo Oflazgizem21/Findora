@@ -1,5 +1,5 @@
 """
-WSGI config for commit_findora project.
+WSGI config for findora project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'commit_findora.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'findora.settings')
 
 application = get_wsgi_application()
