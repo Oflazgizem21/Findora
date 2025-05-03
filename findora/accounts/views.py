@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import CustomUserCreationForm , CustomLoginForm
+from kayip_esya.models import Kayit
+from django.contrib.auth.decorators import login_required
 
 #Ana Sayfaya Dönme Fonksiyonu
 def home(request):
@@ -42,3 +44,17 @@ def user_logout(request):
     logout(request)  # Kullanıcının oturumunu sonlandır
     messages.success(request, 'Başarıyla çıkış yapıldı.')
     return redirect('home')
+
+@login_required
+def profilim(request):
+    kullanici = request.user
+
+    #Kullanıcının kaybettiği ve bulduğu eşyaları alıyoruz
+    kaybettiklerim = Kayit.objects.filter(user=kullanici, kayit_turu='kaybettim')
+    bulduklarim = Kayit.objects.filter(user=kullanici, kayit_turu='buldum')
+
+    return render(request, "profilim.html", {
+        "kaybettiklerim": kaybettiklerim,
+        "bulduklarim": bulduklarim,
+        "user": kullanici,
+    })
