@@ -1,6 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
-    background-image: url("/static/images/arkaplan.jpg");
+    background-image: url("/static/images/deneme1.jpg");
     background-size: cover; /* Resmi ekranın tamamına yayar*/
     background-position: top left; /* Resmi ortalar */
     background-repeat: no-repeat; /* Resmin tekrar etmesini engeller */
@@ -14,71 +13,129 @@ body {
     padding-top: 80px; /* Navbar'ın sayfanın üst kısmına sabitlenmesi için boşluk ekledik */
 }
 
-/* Navbar'ı sayfanın en üstüne sabitle */
-.navbar {
-    position: fixed;
+.custom-header {
+    position: absolute;
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgb(172, 109, 49)!important;;
-    box-shadow: 0px 4px 10px rgb(199, 128, 78);
+    background: transparent;
 }
 
-.navbar-nav .nav-link {
-    font-weight: bold; /* Yazıyı kalın yapar */
-}
-
-
-.container {
-    background: white;
-    padding: 40px;
-    max-width: 800px;
-    width: 100%;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    margin-top: 100px;
-}
-
-h1 {
-    color: #333;
-    font-size: 40px;
-    margin-bottom: 40px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-}
-
-.btn {
-    flex: 1;
-    padding: 40px;
-    font-size: 32px;
-    font-weight: bold;
+.menu-link {
     color: white;
-    background-size: cover; /* Resmin tüm ekranı kaplamasını sağlar */
-    background-position: center; /* Resmi ortalar */
-    background-repeat: no-repeat; /* Resmin tekrarlanmamasını sağlar */
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 500;
     text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+/*aktif sayfa menu linki*/
+.menu-link.active {
+    color: #ffcc00 !important;
+    font-weight: 700; /*daha kalın yazı*/
+    transform: scale(1.05); /*biraz büyümesi için*/
+}
+
+.menu-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%; /* Tam genişlikte çizgi */
+    height: 2px;
+    background: linear-gradient(to right, #ffcc00, #ffaa00); /* Çizgi rengi */
+    background-color: #ffcc00; /* Çizgi rengi */
+    transition: none; /* Animasyonu kapat */
+    display: none !important; /* Aktif sayfa için çizgiyi gizle */
+}
+
+
+.menu-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    display: none !important;
+}
+
+.menu-link:hover {
+    color: #ffcc00; /* İsteğe göre farklı bir hover rengi */
+    transform: scale(1.1);
+}
+
+.menu-link:hover::after {
+    width: 100%;
+}
+
+
+
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Buton stili */
+.btn-custom {
+    padding: 15px 35px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 12px;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: white;
+    display: inline-block;
+}
+
+.btn-found {
+    background-color: #a3d2ca; /* pastel su yeşili */
+    font-family: 'Open Sans', sans-serif;
+}
+
+.btn-found:hover {
+    background-color: #8fcac0;
+    transform: translateY(-3px);
+}
+
+.btn-lost {
+    background-color: #f7a8a8; /* pastel pembe */
+    font-family: 'Open Sans', sans-serif;
+}
+
+.btn-lost:hover {
+    background-color: #f58b8b;
+    transform: translateY(-3px);
+}
+
+
+.report-box {
+    background-color: transparent;
+    border-radius: 24px;
+    padding: 30px 25px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+    border: none;
+    max-width: 500px;
+    width: 90%;
+    margin: 20px auto;
     text-align: center;
+    top: -20px;
+    position: relative;
 }
 
-.btn-primary {
-    background-image: url('/static/images/buldum_arkaplan.jpg'); /* BULDUM butonunun arka planı */
-}
-
-.btn-secondary {
-    background-image: url('/static/images/kaybettim_arkaplan.jpg'); /* KAYBETTİM butonunun arka planı */
-}
-
-.btn:hover {
-    background-color: #a2642a;
-}
-
-.btn-secondary:hover {
-    background-color: #6b4c0c;
+.report-box button {
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
 }

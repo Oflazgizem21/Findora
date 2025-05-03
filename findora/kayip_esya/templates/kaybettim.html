@@ -6,22 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaybettim</title>
     <link rel="stylesheet" href="{% static 'css/kaybettim.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
     <div class="container">
-        <h1>Kaybettim</h1>
+        <a href="javascript:history.back()" class="back-button">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+
+        <h1 class="animate__animated animate__fadeInDown">Kaybettim</h1>
+
         <form method="post" enctype="multipart/form-data" class="form">
             {% csrf_token %}
-          
+
             <!-- Eşya Tanımı -->
             <div class="form-group">
-                <label for="id_description">Eşya Tanımı:</label>
+                <label for="id_description"><i class="fas fa-pencil-alt"></i> Eşya Tanımı:</label>
                 {{ form.tanim }}
             </div>
-          
-            <!-- Eşya Türü Kısmı -->
+
+            <!-- Eşya Türü -->
             <div class="form-group">
-                <label for="id_tur">Eşya Türü:</label>
+                <label for="id_tur"><i class="fas fa-tag"></i> Eşya Türü:</label>
                 <select id="id_tur" name="tur" class="form-select" onchange="toggleCustomInput('tur')">
                     <option value="" selected disabled>Seçiniz...</option>
                     {% for value, label in form.tur.field.choices %}
@@ -33,9 +40,9 @@
                 </div>
             </div>
 
-            <!-- Eşya Rengi Kısmı -->
+            <!-- Renk -->
             <div class="form-group">
-                <label for="id_renk">Eşya Rengi:</label>
+                <label for="id_renk"><i class="fas fa-palette"></i> Eşya Rengi:</label>
                 <select id="id_renk" name="renk" class="form-select" onchange="toggleCustomInput('renk')">
                     <option value="" selected disabled>Seçiniz...</option>
                     {% for value, label in form.renk.field.choices %}
@@ -45,24 +52,99 @@
                 <div id="custom_renk_box" style="display:none; margin-top: 10px;">
                     <input type="text" id="id_custom_renk" name="custom_renk" class="form-input" placeholder="Örnek: Kahverengi, Aslanağzı...">
                 </div>
-            </div>           
+            </div>
 
             <!-- Konum -->
             <div class="form-group">
-                <label for="id_location">Konum:</label>
+                <label for="id_location"><i class="fas fa-map-marker-alt"></i> Konum:</label>
                 {{ form.konum }}
             </div>
-          
-            <!-- Eşya Resmi -->
+
+            <!-- Resim -->
             <div class="form-group file-input-container">
-                <label for="id_image">Eşya Resmi:</label>
+                <label for="id_resim" class="custom-file-label">
+                 <i class="fas fa-file-arrow-down"></i> Dosya Seç
+                 </label>
                 {{ form.resim }}
                 <span>Kaybettiğiniz eşyanın resmini buraya yükleyiniz..</span>
+                <div id="previewContainer" style="display: none; text-align: center;">
+                 <img id="previewImage" style="margin: 1rem auto 0 auto; display: block; max-width: 150px; border-radius: 8px;" />
+                 </div>
             </div>
-          
-            <button type="submit" class="btn">Kaydet</button>
+             
+
+            <button type="submit" class="btn animate__animated animate__pulse animate__infinite animate__slower">
+                <i class="fas fa-save"></i> Kaydet
+            </button>
         </form>
     </div>
-    <script src="{% static 'js/buldum-kaybettim.js' %}"></script>
+
+    <script>
+        function toggleCustomInput(field) {
+            const select = document.getElementById(`id_${field}`);
+            const customBox = document.getElementById(`custom_${field}_box`);
+
+            if (select.value === 'diger') {
+                customBox.style.display = 'block';
+                customBox.querySelector('input').focus();
+                customBox.classList.add('animate__animated', 'animate__fadeIn');
+            } else {
+                customBox.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleCustomInput('tur');
+            toggleCustomInput('renk');
+
+            // Animasyonlu inputlar
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('animate__animated', 'animate__pulse');
+                });
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('animate__animated', 'animate__pulse');
+                });
+            });
+
+            // Dosya etiketi
+            const fileInput = document.querySelector('input[type="file"]');
+            const fileLabel = document.querySelector('.custom-file-label');
+
+            if (fileInput) {
+                fileInput.addEventListener('change', function () {
+                    if (this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        fileLabel.innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+                        fileLabel.style.color = '#20c997';
+                        fileLabel.classList.add('animate__animated', 'animate__bounceIn');
+                        setTimeout(() => fileLabel.classList.remove('animate__animated', 'animate__bounceIn'), 1000);
+                
+                        // 🔽 Burası görsel önizleme kısmı 🔽
+                        if (this.files && this.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                const previewImage = document.getElementById('previewImage');
+                                const previewContainer = document.getElementById('previewContainer');
+                
+                                previewImage.src = e.target.result;
+                                previewContainer.style.display = 'block';
+                            };
+                            reader.readAsDataURL(this.files[0]);
+                        }
+                
+                    } else {
+                        fileLabel.innerHTML = `<i class="fas fa-file-arrow-down"></i> Dosya Seç`;
+                        fileLabel.style.color = '';
+                        document.getElementById('previewContainer').style.display = 'none';
+                    }
+                });
+                
+            }
+        });
+    </script>
+
+  <script src="{% static 'js/buldum-kaybettim.js' %}"></script>
 </body>
 </html>
