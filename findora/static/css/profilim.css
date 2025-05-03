@@ -1,0 +1,413 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+}
+
+
+/* Ana Kapsayıcı */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.back-button {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #1565c0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 10px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #bbdefb;
+    color: #0d47a1;
+}
+
+
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.profile-card {
+    background-color: #f9f9fc;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    text-align: center;
+}
+.profile-card h2 {
+    font-size: 22px;
+    margin: 10px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.profile-card p {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #555;
+}
+.profile-card h3 {
+    font-size: 18px;
+    margin-top: 30px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-card a {
+    display: block;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #0056b3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.profile-card a:hover {
+    color: #003d80;
+    text-decoration: underline;
+}
+
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+}
+
+
+.profile-actions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-actions li {
+    margin-bottom: 10px;
+}
+
+.profile-actions a {
+    text-decoration: none;
+    color: #0057a0;
+    font-weight: bold;
+}
+
+.account-settings {
+    margin-top: 30px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.account-settings h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.account-settings a {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #0057a0;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.account-settings a:hover {
+    background-color: rgba(200, 225, 255, 0.3);
+}
+.account-action {
+    display: block;
+    margin-bottom: 10px;
+    color: #0057a0;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.account-action:hover {
+    background-color: rgba(200, 225, 255, 0.3);
+}
+
+
+.account-action i {
+    font-size: 20px; /* İkon boyutunu ayarlıyoruz */
+}
+
+.account-action:focus {
+    outline: none;
+}
+
+
+.update-form {
+    background-color: #fdfcfc;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.update-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+    color: #333;
+}
+
+.update-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.update-form button {
+    margin-top: 15px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.update-form button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.esya-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.esya-card {
+    flex: 1;
+    min-width: 300px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Ana İçerik */
+.main-content {
+    margin-left: 10px;
+    padding: 20px;
+    width: calc(100% - 200px);
+}
+
+/* Kayıp Eşyalar Kartı */
+.kayiplar-card, .buldugun-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-left: 10px; /* Kartları sola yaklaştırmak için */
+    margin-right: 10px; /* Sağ boşluğu da dengelemek için */
+}
+
+.kayiplar-card h2, .buldugun-card h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Kayıp ve Bulduğun Eşyalar Listeleme */
+.esya-listesi {
+    list-style-type: none;
+    padding: 0;
+}
+
+.esya-item {
+    padding: 15px;
+    background-color: #fafafa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Eşyaların Listelendiği Kartlar */
+.esya-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-left: 10px; /* Eşyaların olduğu alanı sola yaklaştırıyoruz */
+}
+/* Kayıp ve Bulduğun Eşyalar Resimlerini Küçültme */
+.esya-item img {
+    width: 120px; /* Resimleri küçültüyoruz */
+    height: 120px;
+}
+.esya-item strong {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.esya-location {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.esya-description {
+    font-size: 0.9rem;
+    color: #444;
+    margin-top: 5px;
+}
+
+/* Durum Etiketleri */
+.bulundu {
+    color: green;
+    font-weight: bold;
+}
+
+.aranıyor {
+    color: red;
+    font-weight: bold;
+}
+
+
+/*Yorumlar kısmı*/
+.yorum-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.yorum-karti {
+    background: #fdfcfc;
+    border: 1px solid #e0e0e0;
+    border-left: 6px solid #ff4081;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.yorum-karti:hover {
+    transform: scale(1.02);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 18px;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    background-color: #fff5f8;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.blockquote-footer {
+    font-size: 14px;
+    color: #999;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+/* Modal Arka Plan */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal İçeriği */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* Kapatma Butonu */
+.close-button {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.modal-content form label {
+    margin-top: 10px;
+    display: block;
+    font-weight: 500;
+    color: #333;
+}
+
+.modal-content form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.modal-content form button {
+    margin-top: 15px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.modal-content form button:hover {
+    background-color: #0056b3;
+}
