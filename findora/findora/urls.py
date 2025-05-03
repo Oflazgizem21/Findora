@@ -1,5 +1,5 @@
 """
-URL configuration for commit_findora project.
+URL configuration for findora project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('', include('kayip_esya.urls')),
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
-]
+    path('hakkimizda/', TemplateView.as_view(template_name='hakkimizda.html'), name='hakkimizda'),
+    path('iletisim/', TemplateView.as_view(template_name='iletisim.html'), name='iletisim'),
+    ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # statik dosyalar için gerekli      
