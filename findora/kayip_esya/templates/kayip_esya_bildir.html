@@ -15,39 +15,36 @@
     <link rel="stylesheet" href="{% static 'css/kayip_esya_bildir.css'%}">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'images/logo.png' %}" alt="FINDORA Logosu" height="75">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <!-- Sol taraftaki menüler -->
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'iletisim' %}">İletişim</a></li>
-                </ul>
-            </div>
-        </div>
+   <!-- Header alanı - Arka planın üstünde görünecek -->
+<header class="custom-header d-flex justify-content-between align-items-center px-4 py-3">
+    <div class="logo text-white fw-bold fs-3">
+        FINDORA
+    </div>
+    <nav class="menu d-flex gap-4">
+        <a href="{% url 'home' %}" class="text-white text-decoration-none">Anasayfa</a>
+        <a href="{% url 'kayip_esya_bildir' %}" class="text-white text-decoration-none{% if request.path == '/kayip-esya-bildir/' %}active{% endif %}">Kayıp Eşya Bildir</a>
+        <a href="{% url 'hakkimizda' %}" class="text-white text-decoration-none">Hakkımızda</a>
+        <a href="{% url 'iletisim' %}" class="text-white text-decoration-none">İletişim</a>
     </nav>
+</header>
 
 
-    <!-- Sayfa içeriği -->
-    <div class="container text-center mt-5">
-        <h1>📢 Kayıp Eşya Bildir</h1>
-        <div class="d-flex justify-content-center gap-3 mt-3">
-            <a href="{% url 'buldum' %}" class="btn btn-primary">BULDUM</a>
-            <a href="{% url 'kaybettim' %}" class="btn btn-secondary">KAYBETTİM</a>
+<!-- Sayfa içeriği -->
+<div class="container d-flex justify-content-center mt-5">
+    <div class="report-box text-center p-4">
+        <h1 class="page-title"> Kayıp Eşya Bildir</h1>
+        <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap">
+            <a href="{% url 'buldum' %}" class="btn-custom btn-found">BULDUM</a>
+            <a href="{% url 'kaybettim' %}" class="btn-custom btn-lost">KAYBETTİM</a>
         </div>
     </div>
+</div>
+
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0d5f8a9cfdf87f2ab604495d9a9b8b949a9c81075c83ff6252ff6ac68e44d240" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
+    crossorigin="anonymous"></script>
+
 </body>
 </html>
