@@ -45,7 +45,7 @@
                             Hoşgeldiniz, {{ user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Profilim</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profilim' %}">Profilim</a></li>
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
                         </ul>
                     </li>
