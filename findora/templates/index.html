@@ -4,332 +4,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FINDORA</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <!-- Özel CSS -->
+    <title>Findora | Kayıp Eşya Bulma Platformu</title>
+    <link rel="icon" type="image/png" href="{% static 'images/LOGOO.png' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/proje.css' %}">
+    
 </head>
 <body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">FINDORA</a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Anasayfa</a>
+            <a href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
+            <a href="{% url 'hakkimizda' %}">Hakkımızda</a>
+            <a href="{% url 'iletisim' %}">İletişim</a>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" alt="FINDORA Logosu" height="75">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <!-- Sol taraftaki menüler -->
-            <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Bulunan Eşyalar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda'%}">Hakkımızda</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'iletisim' %}">İletişim</a></li>
-            </ul>
-
-            <!-- Dropdown -->
-            <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Hoşgeldiniz, {{ user.username }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="{% url 'profilim' %}">Profilim</a></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
-                        </ul>
-                    </li>
-                {% else %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Giriş Yap
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
-                            <li><a class="dropdown-item" href="{% url 'login' %}">Üye Girişi</a></li>
-                            <li><a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a></li>
-                        </ul>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>  
-
-    <!-- Slider Başlangıcı -->
-    <div class="swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="{% static 'images\slider1.jpg' %}" alt="Test Resim" width="500" height="400">
-
-                <div class="slide-content">
-                    <h2>Findora'ya Hoş Geldiniz!</h2>
-                    <p>Kaybolan eşyalarınızı kolayca bulun, güvenle geri alın.</p>
-                    <a href="{% url 'register' %}" class="btn">Hemen Başla</a>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <img src="{% static 'images\slider2.jpg' %}" alt="Test Resim" width="500" height="400">
-                <div class="slide-content">
-                    <h2>Bulunan Eşyalarınızı Paylaşın</h2>
-                    <p>Bulduğunuz eşyaları paylaşarak kaybolanlara yardımcı olun.</p>
-                    <a href="#" class="btn">Kayıp Eşya Bildirin</a>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <img src="{% static 'images\slider3.jpg' %}" alt="Test Resim" width="500" height="400">
-                <div class="slide-content">
-                    <h2>Her Eşya Bulunduğunda Bir Hikaye Başlar</h2>
-                    <p>Kaybolan eşyalarınızı bulmak hiç bu kadar kolay olmamıştı.</p>
-                    <a href="#" class="btn">Geri Bildirimler</a>
+            <!-- Profil Dropdown -->
+            <div class="profile-container dropdown">
+                <button class="profile-btn dropdown-toggle d-flex align-items-center" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="profile-icon me-2">
+                        <i class="fas fa-user-circle fa-lg"></i>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <span class="username">{{ user.username }}</span>
+                    {% endif %}
+                </button>
+                    <div class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="profileDropdown">
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-info" href="{% url 'admin:index' %}">
+                                    <i class="fas fa-cog me-1"></i> Admin Paneli
+                                </a>
+                            {% else %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'profilim' %}">
+                                    <i class="fas fa-user-circle me-2"></i> Profilim
+                                </a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt me-2"></i> Çıkış Yap
+                            </a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt me-2"></i> Üye Girişi
+                            </a>
+                            <a class="dropdown-item" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus me-2"></i> Kayıt Ol
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Slider Navigasyon -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <!-- Sayfa Göstergeleri -->
-        <div class="swiper-pagination"></div>
-    </div>
+    </nav>
 
-    <!-- Nasıl Çalışır? -->
-    <section class="how-it-works">
-        <h2>FINDORA Nasıl Çalışır?</h2>
-        <div class="steps-container">
-            <div class="step">
-                <div class="icon">📸</div>
-                <h3>1. Eşyanızı Yükleyin</h3>
-                <p>Kayıp veya bulunan eşyanın fotoğrafını ekleyin.</p>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Kayıp eşyalarınızı <span style="color: var(--primary);">stressiz</span> bulmanın yolu</h1>
+            <p>Findora ile kaybettiğiniz değerli eşyalarınıza kolayca ulaşın. Binlerce mutlu kullanıcımız gibi siz de Findora farkını yaşayın.</p>
+            <div class="cta-group">
+                <!-- Basit Arama Çubuğu -->
+                <form class="hero-search" action="/arama" method="get">
+                    <div class="search-box">
+                        <input type="text" 
+                            name="q" 
+                            placeholder="Anahtar kelimeler girin (örn: siyah cüzdan, AirPods)" 
+                            class="search-input">
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i> Ara
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div class="step">
-                <div class="icon">🔍</div>
-                <h3>2. Sistem Eşleştirme Yapar</h3>
-                <p>Gelişmiş görüntü işleme ile benzer eşyalar bulunur.</p>
+        </div>
+    </section>
+    
+    <!-- Features (Findora Nasıl Çalışır?) Bölümü -->
+    <section id="nasil-calisir" class="features" style="background: linear-gradient(135deg, #FFF9FC 0%, #FFF5F9 100%);
+        padding: 8rem 5%;
+        border-radius: 0 0 30px 30px;">
+        <h2 style="text-align:center; font-size: 2rem; margin-bottom: 1rem; color: #FF9E9E;">Findora Nasıl Çalışır?</h2>
+        <div class="features-grid">
+            <!-- Kart 1 -->
+            <div class="feature-card" style="background-color: #FFF9FA; border: 1px solid #FFD6E7;">
+                <div class="feature-icon" style="background-color: #FFD6E7; color: #D23369;">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <h3 style="color: #FF9E9E;">1. Eşya Paylaşımı</h3>
+                <p style="color: #888094;"> Kullanıcılar kaybettikleri veya buldukları eşyayı sisteme yükler.</p>
             </div>
-            <div class="step">
-                <div class="icon">📲</div>
-                <h3>3. Bildirim Alın</h3>
-                <p>Eşleşen bir eşya bulunduğunda anında bilgilendirilirsiniz.</p>
+            
+            <!-- Kart 2 -->
+            <div class="feature-card" style="background-color: #FFF9FA; border: 1px solid #FFD6E7;">
+                <div class="feature-icon" style="background-color: #FFD6E7; color: #D23369;">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 style="color: #FF9E9E;">2. Eşya Arama</h3>
+                <p style="color: #888094;">Kayıp eşya sahipleri, sisteme yüklenen bulunan eşyaları inceleyerek "Bu benim" seçeneğini kullanır.</p>
+            </div>
+            
+            <!-- Kart 3 -->
+            <div class="feature-card" style="background-color: #FFF9FA; border: 1px solid #FFD6E7;">
+                <div class="feature-icon" style="background-color: #FFD6E7; color: #D23369;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 style="color: #FF9E9E;">3. Bilgi Kıyaslama</h3>
+                <p style="color: #888094;">Sistem, eşya bilgileriyle kullanıcı beyanını kıyaslayarak eşleşme doğruluğunu kontrol eder.</p>
+            </div>
+            
+            <!-- Kart 4 -->
+            <div class="feature-card" style="background-color: #FFF9FA; border: 1px solid #FFD6E7;">
+                <div class="feature-icon" style="background-color: #FFD6E7; color: #D23369;">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3 style="color: #FF9E9E;">4. Bildirim ve Sonuç</h3>
+                <p style="color: #888094;">Eşleşme sonucu kullanıcıya bildirim gönderilir; eşleşme başarılıysa eşya sahibine ulaştırılır.</p>
             </div>
         </div>
     </section>
 
-        <!-- Kullanıcı Yorumları -->
-        <section class="container my-5">
-            <h2>Kullanıcı Yorumları</h2>
-            
-            <!-- Yorumlar kısmı -->
-            <div class="yorum-container">
-                <div class="scroll-btn left" id="leftBtn">
-                    &lt;
-                </div>
-                <div class="yorum-wrapper">
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Zehra A.</h5>
-                            <p class="card-text">Harika bir platform olmuş!Kullanıcı arayüzü çok sade ve anlaşılır.Kayıp eşyaları bulmak için kesinlikle çok faydalı
-                                olacak.Emeği geçen herkese çok teşekkürler!</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                            </div>
-                            <footer class="blockquote-footer">20 Mart 2025</footer>
-                        </div>
-                    </div>
-        
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Gizem O.</h5>
-                            <p class="card-text">Yeni açılmış bir platform olmasına rağmen gayet başarılı.Daha fazla kişi kullanmaya başlarsa çok daha faydalı olacak.Başarılar dilerim.</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9734;</span>
-                            </div>
-                            <footer class="blockquote-footer">14 Mart 2025</footer>
-                        </div>
-                    </div>
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Ahmet T.</h5>
-                            <p class="card-text">Sayfa çok iyi ama bazen giriş yaparken hata alıyorum.'Bağlantı zaman aşımına uğradı.' uyarısı geliyor.Bu konuda bir güncelleme yaparsanız süper olur.</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9734;</span>
-                            </div>
-                            <footer class="blockquote-footer">8 Mart 2025</footer>
-                        </div>
-                    </div>
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Emre F.</h5>
-                            <p class="card-text">Bu site sayesinde kaybolan cüzdanımı bulan kişiyle iletişime geçebildim.Böyle bir hizmet sunduğunuz için teşekkürler.</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9734;</span>
-                            </div>
-                            <footer class="blockquote-footer">2 Mart 2025</footer>
-                        </div>
-                    </div>
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Zeynep A.</h5>
-                            <p class="card-text">Kaybolan eşya takibim çok kolaylaştı.Fotoğraf yüklemek ve eşya hakkında bilgi vermek çok pratik,sistem hemen eşleşmeyi yapıp beni bilgilendirdi.Gerçekten harika bir hizmet.</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9734;</span>
-                            </div>
-                            <footer class="blockquote-footer">23 Şubat 2025</footer>
-                        </div>
-                    </div>
-        
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">Sena K.</h5>
-                            <p class="card-text">Bugün bankta unutulmuş bir çanta buldum ve hemen siteye yükledim.Kısa sürede kaybeden kişiye ulaştım ve o da çantasına kavuştu.</p>
-                            <div>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                            </div>
-                            <footer class="blockquote-footer">18 Şubat 2025</footer>
-                        </div>
-                    </div>
-                </div>
-                 <!-- Sağ Ok -->
-            <div class="scroll-btn right" id="rightBtn">
-                &gt;
-            </div>
-            </div>
-        </section>
+        <!-- Kullanıcı Yorumları Bölümü -->
+    <section class="testimonials">
+        <div class="testimonials-header">
+            <h2>Kullanıcı Deneyimleri</h2>
+            <p>Findora kullanıcılarının gerçek yorumları</p>
+        </div>
 
-    <!-- Sıkça Sorulan Sorular -->
-    <section class="container my-5">
-        <h2 class="text-center mb-4">Sık Sorulan Sorular</h2>
-        <div class="sss-container">
-            <div class="soru">
-                <button class="soru-baslik">Kayıp eşya nasıl ilan edilir?</button>
-                <div class="soru-cevap">
-                    <p>Kayıp eşyanızı ilan etmek için web sitemize üye olup, "Kayıp İlanı Ver" sayfasından gerekli bilgileri doldurmanız yeterlidir.</p>
+        <div class="testimonials-container">
+            <!-- Sol Ok -->
+            <button class="scroll-btn left" id="leftBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="testimonials-carousel">
+                {% for yorum in yorumlar %}
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <div class="user-avatar" style="background-color: {{ yorum.user.avatar_color|default:'#FF9E9E' }};">
+                            {{ yorum.user.username|first|upper }}
+                        </div>
+                        <div class="user-details">
+                            <h4>{{ yorum.user.username }}</h4>
+                            <span class="post-date">{{ yorum.tarih|date:"d F Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"{{ yorum.yorum }}"</p>
+                    </div>
+                    <div class="rating">
+                        {% for i in 1..5 %}
+                            {% if i <= yorum.yildizlar %}
+                                <span class="star filled">&#9733;</span>
+                            {% else %}
+                                <span class="star">&#9734;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="soru">
-                <button class="soru-baslik">Kayıp eşya bildirimini nasıl silebilirim?</button>
-                <div class="soru-cevap">
-                    <p>Hesabınıza giriş yaparak "İlanlarım" bölümüne gidin ve silmek istediğiniz ilanı seçerek kaldırabilirsiniz.</p>
+                {% empty %}
+                <div class="empty-testimonials">
+                    <i class="far fa-comment-dots"></i>
+                    <p>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
                 </div>
+                {% endfor %}
             </div>
+
+            <!-- Sağ Ok -->
+            <button class="scroll-btn right" id="rightBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="add-comment">
+            <a href="#" class="add-comment-btn">
+                <i class="fas fa-plus"></i> Yorum Yap
+            </a>
+        </div>
+    </section>
+
+    <!-- SSS Bölümü (Footer'dan hemen önce) -->
+    <!-- SSS Bölümü -->
+    <section id='sss' class="sss-section" style="background: linear-gradient(135deg, #FFF9FC 0%, #FFF5F9 100%);padding: 6rem 5%;border-top: 1px solid rgba(0,0,0,0.05);border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <div class="container" style="max-width: 1000px; margin: 0 auto;">
+            <h2 class="sss-title" style="text-align: center;font-size: 2.2rem;color: #FF9E9E;margin-bottom: 3rem;font-weight: 700;position: relative;display: inline-block;left: 50%;transform: translateX(-50%);">
+                <span style="display: inline-block;padding: 0 20px;background: linear-gradient(135deg, #FFF9FC 0%, #FFF5F9 100%);position: relative;z-index: 2;">Sıkça Sorulan Sorular</span>
+                <span style="position: absolute;top: 50%;left: 0;right: 0;height: 2px;background: linear-gradient(90deg, rgba(255,158,158,0.3), rgba(255,158,158,0.8), rgba(255,158,158,0.3));z-index: 1;"></span>
+            </h2>
             
-            <div class="soru">
-                <button class="soru-baslik">Kayıp eşyamı başka biri almışsa ne yapabilirim?</button>
-                <div class="soru-cevap">
-                    <p>Bu gibi durumlarda platform üzerinden iletişim bilgilerini kontrol edebilir ve gerekirse destek ekibimize başvurabilirsiniz.</p>
+            <div class="sss-container" style="max-width: 800px; margin: 0 auto;">
+                <!-- SSS Item 1 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Findora Nedir?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Findora, kullanıcıların kaybettikleri ya da buldukları eşyaları sisteme paylaşıp bu sayede kayıp eşyaların bulunma sürecini kolaylaştırmayı amaçlayan dijital bir kayıp eşya takip platformudur.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="soru">
-                <button class="soru-baslik">Eşya teslimatı sırasında dikkat edilmesi gerekenler nelerdir?</button>
-                <div class="soru-cevap">
-                    <p>Güvenli bir teslimat için halka açık bir yerde buluşmanızı öneririz. Ayrıca, karşı tarafın kimliğini doğrulamayı unutmayın.</p>
+
+                <!-- SSS Item 2 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Findora'ya nasıl kayıt olup giriş yapabilirim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Ana sayfamızdaki profil ikonunun üstüne gelip "Kayıt Ol" butonuna tıklayarak kolayca kayıt olabilir, aynı yerden "Üye Girişi" butonuna tıklayarak kolayca giriş yapabilirsiniz.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="soru">
-                <button class="soru-baslik">FINDORA ücretli mi?</button>
-                <div class="soru-cevap">
-                    <p>Hayır, FINDORA tamamen ücretsizdir. Kayıp ve bulunan eşyalarla ilgili ilan vermek veya arama yapmak için herhangi bir ücret ödemezsiniz.</p>
+
+                <!-- SSS Item 3 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Kayıp eşya bildirimi yapmak ücretli mi?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">"Kaybettim" bildiriminde ilk 3 (üç) hak ücretsiz olurken sonraki bildirimler için "Premium" paket almanız gerekmektedir fakat "Buldum" bildirimi yapma hakkı sınırsızdır.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="soru">
-                <button class="soru-baslik">Hangi tür eşyalar platformda paylaşılamaz?</button>
-                <div class="soru-cevap">
-                    <p>Tehlikeli maddeler, yasa dışı ürünler ve kişisel belgeler gibi eşyaların paylaşımı yasaktır. Daha fazla bilgi için kullanım koşullarımızı inceleyin.</p>
+
+                <!-- SSS Item 4 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Kayıp bir eşyamı nasıl ekleyebilirim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">"Kayıp Eşya Bildir" veya "Eşya Bildir" butonlarına basıp çıkan sayfada "Kaybettim" butonuna basınız. Karşınıza çıkan sayfadaki formu doldurunuz ve kaydediniz.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="soru">
-                <button class="soru-baslik">Bulunan eşyaları nasıl görebilirim?</button>
-                <div class="soru-cevap">
-                    <p>"Bulunan Eşyalar" sayfasından tüm bulunan eşyaların listesine ulaşabilirsiniz. Arama filtrelerini kullanarak aradığınız eşyayı kolayca bulabilirsiniz.</p>
+
+                <!-- SSS Item 5 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Bulduğum bir eşyayı nasıl bildirebilirim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">"Kayıp Eşya Bildir" veya "Eşya Bildir" butonlarına basıp çıkan sayfada "Buldum" butonuna basınız. Karşınıza çıkan sayfadaki formu doldurunuz ve kaydediniz.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="soru">
-                <button class="soru-baslik">İlanım ne kadar süreyle yayında kalır?</button>
-                <div class="soru-cevap">
-                    <p>Kayıp ilanınız, eşyanız bulunana kadar veya sizin tarafınızdan kaldırılana kadar yayında kalır.</p>
+
+                <!-- SSS Item 6 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Fotoğraf yüklemeden eşya ekleyebilir miyim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Evet, fotoğraf yüklemek isteğe bağlıdır. Ancak eşleşme doğruluğunu artırmak için görsel yüklemeniz öneririz.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="soru">
-                <button class="soru-baslik">Bulduğum eşyayı nasıl sahibine ulaştırabilirim?</button>
-                <div class="soru-cevap">
-                    <p>Bulduğunuz eşyanın ilan sayfasında bulunan iletişim bilgileri aracılığıyla eşya sahibine ulaşabilirsiniz.</p>
+
+                <!-- SSS Item 7 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Başkasına ait bir eşyayı talep eden biri olursa ne yapılır?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Findora adminleri büyük bir titizlikle talep edilen eşya ile talebi eden kişinin eşya bilgilerini karşılaştırır ve sonuca ulaşır. Emin olunamayan ve karar verilemeyen durumlarda eşyayı talep eden kişiyle iletişime geçilir ve kişiye güvenlik soruları yöneltilir.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SSS Item 8 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Sistemde olan eşyayı nasıl talep edebilirim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Ana sayfada bulunan arama motorundan eşyanızın anahtar kelimelerini girerek filtreleme yaparsınız ve karşınıza o etiketteki kayıp eşyalar çıkar. Her eşyanın altında "Bu Eşya Benim!" butonu vardır. O butona tıklayıp karşınızda çıkan sayfada sizin daha önce sisteme "Kaybettim" olarak gönderdiğiniz eşyalar olacaktır. Onlardan birini seçip kayıp eşya talebinde bulunabilirsiniz.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SSS Item 9 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span> Bir eşya talebinde bulundum, ne zaman cevap alırım?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Talebiniz, admin tarafından onaylandığında ya da reddedildiğinde bildirim alırsınız. Bekleme süresi, adminlerin aktifliğine bağlı olarak değişebilir.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SSS Item 10 -->
+                <div class="sss-item" style="margin-bottom: 15px; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1); transition: all 0.3s; border: 1px solid rgba(255, 158, 158, 0.2);">
+                    <button class="sss-question" style="width: 100%; padding: 20px 25px; text-align: left; background: white; border: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #3A3845; cursor: pointer; transition: all 0.3s;">
+                        <span>Sistemde "Kaybettim" olarak paylaştığım eşya olmasa da kayıp eşya talebinde bulunabilir miyim?</span>
+                        <i class="fas fa-chevron-down" style="color: #FF9E9E;transition: transform 0.3s;font-size: 0.9rem;"></i>
+                    </button>
+                    <div class="sss-answer" style="background: white;max-height: 0;overflow: hidden;transition: max-height 0.3s ease-out;">
+                        <div style="padding: 0 25px 20px;">
+                            <p style="color: #888094;line-height: 1.7;margin: 0;padding: 20px 0 0;">Hayır. Findora, sisteme önceden "Kaybettim" olarak paylaştığınız eşyalar ile eşleştirme hakkı sunar.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <!--Footer-->
-    <footer class="text-center py-3">
+    <footer>
         <div class="footer-content">
-        <div>
-            <p>
-            <h2>FINDORA</h2>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üremek için buradayız.
-            Güvenli ve hızlı işlem yapabilmeniz için sürekli gelişiyoruz.
-            </p>
-
-            <div class="social-icons">
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-twitter-x"></i></a>
-            <a href="#"><i class="bi bi-youtube"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
+            <div class="footer-column">
+                <h3>Findora</h3>
+                <p>Kayıp eşyalarınızı güvenle bulmanın en hızlı çözümü.
+                    Güvenilir ve etkili hizmet anlayışımızla yanınızdayız.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Bağlantılar</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+                    <li><a href="#nasil-calisir">Nasıl Çalışır?</a></li>
+                    <li><a href="#sss">Sıkça Sorulan Sorular</a></li>
+                    <li><a href="{% url 'iletisim' %}">İletişim</a></li>
+                    <li><a href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Yasal</h3>
+                <ul>
+                    <li><a href="#">Kullanım Koşulları</a></li>
+                    <li><a href="#">Gizlilik Politikası</a></li>
+                    <li><a href="#">Çerez Politikası</a></li>
+                    <li><a href="#">KVKK Aydınlatma Metni</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>İletişim</h3>
+                <ul>
+                    <li><i class="fas fa-envelope" style="margin-right: 8px;"></i> info@findora.com</li>
+                    <li><i class="fas fa-phone" style="margin-right: 8px;"></i> 0546 514 34 88</li>
+                    <li><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Trabzon, Türkiye</li>
+                </ul>
             </div>
         </div>
-
-        <div class="contact-info">
-            <p><a href="https://maps.app.goo.gl/JAvQhj4ZsP8UwQrS9" target="_blank"></a><i
-                class="bi bi-geo-alt"></i>Trabzon,Türkiye</p>
-            <p><i class="bi bi-telephone"></i>+90 554 514 1224</p>
-            <p><i class="bi bi-envelope-at"></i>findora_help@hotmail.com</p>
-        </div>
-        </div>
         <div class="copyright">
-        <p>&copy; 2025 Tüm Hakları Saklıdır</p>
+            &copy; 2025 Findora. Tüm hakları saklıdır.
         </div>
     </footer>
 
-<!-- Diğer script'ler -->
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll efekti
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
 
-<!-- Kendi script'lerimiz -->
-<script src="{% static 'js/oklar.js' %}"></script>
-<script src="{% static 'js/proje.js' %}"></script>
+        // Kaydırma butonları için JavaScript
+        document.getElementById('leftBtn').addEventListener('click', function() {
+            document.querySelector('.testimonials-carousel').scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        });
 
+        document.getElementById('rightBtn').addEventListener('click', function() {
+            document.querySelector('.testimonials-carousel').scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
+        });
+
+        // SSS bölümü için JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const sssItems = document.querySelectorAll('.sss-item');
+            
+            sssItems.forEach(item => {
+                const question = item.querySelector('.sss-question');
+                const answer = item.querySelector('.sss-answer');
+                
+                question.addEventListener('click', () => {
+                    // Tüm cevapları kapat
+                    document.querySelectorAll('.sss-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.sss-answer').style.maxHeight = null;
+                            otherItem.querySelector('.sss-question i').style.transform = 'rotate(0deg)';
+                            otherItem.style.boxShadow = '0 5px 15px rgba(255, 158, 158, 0.1)';
+                        }
+                    });
+                    
+                    // Tıklanan öğeyi aç/kapat
+                    if (answer.style.maxHeight) {
+                        answer.style.maxHeight = null;
+                        question.querySelector('i').style.transform = 'rotate(0deg)';
+                        item.style.boxShadow = '0 5px 15px rgba(255, 158, 158, 0.1)';
+                    } else {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        question.querySelector('i').style.transform = 'rotate(180deg)';
+                        item.style.boxShadow = '0 10px 25px rgba(255, 158, 158, 0.2)';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
