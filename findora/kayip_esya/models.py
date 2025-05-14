@@ -52,3 +52,11 @@ class Kanit(models.Model):
 
     def _str_(self):
         return f"Kanit - {self.kullanici.username if self.kullanici else 'Bilinmeyen'} - {self.ilgili_kayit.tanim}"
+    
+class GenelYorum(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Kullanıcıyı bağlıyoruz
+    yorum = models.TextField(verbose_name="Yorum", max_length=500)  # Yorumun içeriği
+    tarih = models.DateTimeField(auto_now_add=True, verbose_name="Yorum Tarihi")  # Yorumun tarihi
+
+    def __str__(self):
+        return f"Yorum: {self.yorum[:50]}..."  # Yorumun başını döndürüyoruz, özet için
