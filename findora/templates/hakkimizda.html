@@ -4,191 +4,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkımızda - FINDORA</title>
-    <link rel="stylesheet" href="{% static 'css/proje.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- Font Awesome CDN -->
-  <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script>
-  <!--Css-->
-  <link rel="stylesheet" href="{% static 'css/proje.css' %}">
-  
-  <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
-
-
-
+    <title>Findora - Hakkımızda</title>
+   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <link rel="stylesheet" href="{% static 'css/hakkimizda.css' %}">
 </head>
 <body>
-
-     <!-- Navbar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            
-    <a class="navbar-brand" href="#">
-        <img src="{% static 'images\logo.png' %}" alt="Logo" width="100">
-    </a>
-    
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <!-- Sol taraftaki menüler -->
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Anasayfa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'iletisim'%}">İletişim</a></li>
-                </ul>
-    
-                
-    
-    <!-- Sağ taraftaki kullanıcı menüsü -->
-    <ul class="navbar-nav ms-auto">
-        {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hoşgeldiniz, {{ user.username }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#">Profilim</a></li>
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a></li>
-                </ul>
-            </li>
-        {% else %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Giriş Yap
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
-                    <li><a class="dropdown-item" href="{% url 'login' %}">Üye Girişi</a></li>
-                    <li><a class="dropdown-item" href="{% url 'register' %}">Kayıt Ol</a></li>
-                </ul>
-            </li>
-        {% endif %}
-    </ul>
-    </div>
-    </div>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Findora</a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Ana Sayfa</a>
+            <a href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
+            <a href="{% url 'hakkimizda' %}" class="active">Hakkımızda</a>
+            <a href="{% url 'iletisim' %}">İletişim</a>
+        </div>
     </nav>
     
-
-    <div class="hakkimizda-container">
-        <div class="hakkimizda-about-section">
-            <h2>Biz Kimiz?</h2>
-            <p>FINDORA, kaybolan eşyaların bulunmasını kolaylaştıran bir platformdur. Kullanıcılar arasında güvenli bir köprü oluşturarak kaybolan eşyaların sahiplerine ulaşmasını sağlıyoruz.</p>
+    <section class="about-hero">
+        <h1>Findora Ailesi</h1>
+        <p>Findora, kayıp ve bulunan eşyaların güvenle paylaşılabileceği, kullanıcılar arasında köprü kuran yenilikçi bir platformdur. "Bir eşya kaybolduğunda sadece bir nesne değil, bazen bir anı da kaybolur" düşüncesiyle yola çıktık.
+        Amacımız, kaybolan eşyaların gerçek sahiplerine en kısa sürede ulaşmasını sağlamak ve bu süreçte insanlara umut olmak. Kullanıcı dostu arayüzümüz ve akıllı eşleştirme sistemimiz sayesinde herkesin kolayca bildirimde bulunabileceği bir ortam sunuyoruz.Findora olarak, her eşyanın sahibine ulaşabildiği bir dünya hayal ediyoruz. Bu yolda büyümeye ve gelişmeye devam edeceğiz.</p>
+    </section>
+    
+    <div class="about-content">
+        <div class="section-title">
+            <h2>Neden Findora?</h2>
+            <p>Teknolojinin gücünü kullanarak kayıp eşya sorununa akıllı çözümler sunuyoruz. İşte bizi özel kılan bazı özelliklerimiz:</p>
         </div>
-
-        <div class="hakkimizda-cards">
-            <div class="hakkimizda-card">
-                <i class="fas fa-search"></i>
-                <h3>Kolay Arama</h3>
-                <p>Kayıp eşyalarınızı kolayca arayabilir ve filtreleme seçenekleriyle hızlıca bulabilirsiniz.</p>
+        
+        <div class="mission-cards">
+            <div class="mission-card">
+                <div class="icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Güvenilir Sistem</h3>
+                <p>Gelişmiş doğrulama sistemi sayesinde eşyaların gerçek sahiplerine ulaşmasını garanti ediyoruz. 3 aşamalı kimlik doğrulama ile güvenliği ön planda tutuyoruz.</p>
             </div>
-            <div class="hakkimizda-card">
-                <i class="fas fa-handshake"></i>
-                <h3>Güvenli İletişim</h3>
-                <p>Kullanıcılar arasında güvenli bir mesajlaşma ve doğrulama süreci sunuyoruz.</p>
+            <div class="mission-card">
+                <div class="icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Hızlı Eşleştirme</h3>
+                <p>Yapay zeka destekli eşleştirme algoritmamız sayesinde kayıp eşyalarınızı ortalama 24 saat içinde size ulaştırıyoruz. Acil durumlarda öncelikli destek sunuyoruz.</p>
             </div>
-            <div class="hakkimizda-card">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>Konum Bazlı Destek</h3>
-                <p>Eşyalarınızı en yakın lokasyondan arayarak kolayca ulaşabilirsiniz.</p>
+            <div class="mission-card">
+                <div class="icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Gizlilik Odaklı</h3>
+                <p>Kişisel verilerinizin güvenliği için en son şifreleme teknolojilerini kullanıyoruz. Bilgileriniz asla üçüncü şahıslarla paylaşılmaz.</p>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <h2>Ekibimiz</h2>
+            <p>Findora'nın arkasındaki tutkulu ekip. Her biri alanında uzman ve kayıp eşyalarınızı bulmak için gece gündüz çalışıyor.</p>
+        </div>
+        
+        <div class="team-members">
+            
+            <div class="team-member">
+                <img src="{% static 'images/zeynep.jpg' %}" alt="Zeynep Türkan Aytaç" class="team-member-img">
+                <h3>Zeynep Türkan Aytaç</h3>
+                <p>Backend Geliştirici</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/zeynep-t%C3%BCrkan-ayta%C3%A7-42a396328/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/TurkanAYT"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/gizem.jpg' %}" alt="Gizem Oflaz" class="team-member-img">
+                <h3>Gizem Oflaz</h3>
+                <p>Full Stack Geliştirici</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/gizem-oflaz-965156288/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Oflazgizem21"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/ozlem.jpg' %}" alt="Özlem Özdemirci" class="team-member-img">
+                <h3>Özlem Özdemirci</h3>
+                <p>Frontend Geliştirici</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/%C3%B6zlem-%C3%B6zdemirci-810086295/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ozlemozdemirci"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <h2>Değerlerimiz</h2>
+            <p>Findora olarak bu değerler ışığında ilerliyor ve her kararımızı bu prensiplere göre alıyoruz.</p>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-item">
+                <h3>Şeffaflık</h3>
+                <p>Tüm süreçlerimiz açık ve takip edilebilir</p>
+            </div>
+            <div class="value-item">
+                <h3>Empati</h3>
+                <p>Kullanıcılarımızın duygularını anlıyoruz</p>
+            </div>
+            <div class="value-item">
+                <h3>Yenilikçilik</h3>
+                <p>Sürekli daha iyisini arayış içindeyiz</p>
+            </div>
+            <div class="value-item">
+                <h3>Sorumluluk</h3>
+                <p>Topluma karşı sorumluluk bilinciyle hareket ederiz</p>
+            </div>
+            <div class="value-item">
+                <h3>Güven</h3>
+                <p>Kullanıcılarımızın güveni en değerli varlığımız</p>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <h2 style="color: white; margin-bottom: 1rem;">Findora ile</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 800px; margin: 0 auto;">Bugüne kadar binlerce kayıp eşya sahiplerine kavuştu. İşte bazı istatistiklerimiz:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h2 class="count-up" data-target="5894">0<span class="suffix">+</span></h2>
+                    <p>Kayıp Eşya Bulundu</p>
+                </div>
+                <div class="stat-item">
+                    <h2 class="count-up" data-target="24">0</h2>
+                    <p>Ortalama Çözüm Süresi</p>
+                </div>
+                <div class="stat-item">
+                    <h2 class="count-up" data-target="98">0<span class="suffix">%</span></h2>
+                    <p>Memnuniyet Oranı</p>
+                </div>
+                <div class="stat-item">
+                    <h2 class="count-up" data-target="42">0</h2>
+                    <p>Şehirde Hizmet</p>
+                </div>
             </div>
         </div>
     </div>
-
-      
-
-    <div class="container py-4">
-        <div class="row justify-content-center g-4">
-          
-          <!-- Gizem (Takım Kaptanı) -->
-          <div class="col-md-4 col-sm-6">
-            <div class="card team-card text-center">
-              <img src="{% static 'images/gizem.jpg' %}" class="team-img" alt="Gizem">
-              <div class="card-body">
-                <div class="team-name">Gizem Oflaz</div>
-                <p class="team-role">Backend Geliştirici</p>
-                <div class="social-links">
-                  <a href="https://www.linkedin.com/in/gizem" target="_blank" class="fab fa-linkedin"></a>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Findora</h3>
+                <p>Kayıp eşyalarınızı güvenle bulmanın en hızlı çözümü.
+                    <br>Güvenilir ve etkili hizmet anlayışımızla yanınızdayız.</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
                 </div>
-              </div>
             </div>
-          </div>
-      
-          <!-- Zeynep (Kod Kontrolcüsü) -->
-          <div class="col-md-4 col-sm-6">
-            <div class="card team-card text-center">
-              <img src="{% static 'images/zeynep.jpg' %}" class="team-img" alt="Zeynep">
-              <div class="card-body">
-                <div class="team-name">Zeynep Türkan Aytaç</div>
-                <p class="team-role">Backend Geliştirici</p>
-                <div class="social-links">
-                  <a href="https://www.linkedin.com/in/zeynep" target="_blank" class="fab fa-linkedin"></a>
-                </div>
-              </div>
+            <div class="footer-column">
+                <h3>Hızlı Linkler</h3>
+                <a href="{% url 'home' %}">Ana Sayfa</a>
+                <a href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
+                <a href="{% url 'hakkimizda' %}">Hakkımızda</a>
+                <a href="{% url 'iletisim' %}">İletişim</a>
             </div>
-          </div>
-      
-          <!-- Özlem (Frontend Geliştirici) -->
-          <div class="col-md-4 col-sm-6">
-            <div class="card team-card text-center">
-              <img src="{% static 'images/ozlem.jpg' %}" class="team-img" alt="Özlem">
-              <div class="card-body">
-                <div class="team-name">Özlem Özdemirci</div>
-                <p class="team-role">Frontend Geliştirici</p>
-                <div class="social-links">
-                  <a href="https://www.linkedin.com/in/ozlem" target="_blank" class="fab fa-linkedin"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-        </div>
-      </div>
-<!-- Footer -->
-<footer class="text-center py-3">
-    <div class="footer-content">
-        <div>
-            <h2>FINDORA</h2>
-            <p>Biz kaybolan eşyalarınızı bulmak ve kayıp bildirimlerinizi alarak çözüm üretmek için buradayız.</p>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/profile.php?id=61573319105115"><i class="bi bi-facebook"></i></a>
-                <a href="https://x.com/zeynepturkan_61"><i class="bi bi-twitter"></i></a>
-                <a href="https://www.youtube.com/@turkan61"><i class="bi bi-youtube"></i></a>
-                <a href="https://www.instagram.com/zeynep61turkan/"><i class="bi bi-instagram"></i></a>
-                <a href="https://www.linkedin.com/in/zeynep-t%C3%BCrkan-ayta%C3%A7-42a396328/"><i class="bi bi-linkedin"></i></a>
+            <div class="footer-column">
+                <h3>İletişim</h3>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Trabzon,Türkiye</p>
+                <p><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> 0850 123 45 67</p>
+                <p><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> findora_help@hotmail.com</p>
             </div>
         </div>
-        <div class="contact-info">
-            <p><i class="bi bi-geo-alt"></i> Trabzon, Türkiye</p>
-            <p><i class="bi bi-telephone"></i> +90554 514 1224</p>
-            <p><i class="bi bi-envelope-at"></i> findora_help@hotmail.com </p>
+        
+        <div class="copyright">
+            <p> Kayıp eşyalarınızı bulmak için güvenilir çözüm ortağınız. <a href="#" style="color: var(--accent);">Gizlilik Politikası</a> | <a href="#" style="color: var(--accent);">Kullanım Şartları</a></p>
         </div>
-    </div>
-    <div class="copyright">
-        <p>&copy; 2025 Tüm Hakları Saklıdır</p>
-    </div>
-</footer>
-<!-- Footer End -->
+    </footer>
 
-   <!-- ✅ Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/YOUR_KIT_ID.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const counters = document.querySelectorAll(".count-up");
+      
+          counters.forEach(counter => {
+              const target = +counter.getAttribute("data-target");
+              const suffix = counter.querySelector(".suffix");
+              const updateCount = () => {
+                const current = +counter.firstChild.nodeValue.replace(/\D/g, '');
+                const increment = Math.ceil(target / 200);
+      
+                if (current < target) {
+                    counter.firstChild.nodeValue = (current + increment).toLocaleString();
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.firstChild.nodeValue = target.toLocaleString();
+                }
+            };
+      
+            updateCount();
+          });
+        });
+      </script>
 </body>
 </html>
-
-

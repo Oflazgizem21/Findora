@@ -14,7 +14,7 @@
 }
 
 body {
-    background-image: url("/static/images/arkaplan2.png");
+    background-image: url("/static/images/buldumarkaplan.png");
     background-size: cover; /* Resmi ekranın tamamına yayar*/
     background-position: top left; /* Resmi ortalar */
     min-height: 100vh;
