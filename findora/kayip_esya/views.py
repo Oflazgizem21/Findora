@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import KayitForm
+from .models import Kayit
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -47,3 +48,21 @@ def buldum(request):
     else:
         form = KayitForm()
     return render(request, 'buldum.html', {'form': form})
+
+@login_required
+def kayit_duzenle(request, pk):
+    kayit = get_object_or_404(Kayit, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = KayitForm(request.POST, request.FILES, instance=kayit)
+        if form.is_valid():
+            form.save()
+            return redirect('profilim')
+    else:
+        form = KayitForm(instance=kayit)
+    return render(request, 'kayit_duzenle.html', {'form': form})
+
+@login_required
+def kayit_sil(request, pk):
+    kayit = get_object_or_404(Kayit, pk=pk, user=request.user)
+    kayit.delete()
+    return redirect('profilim')
