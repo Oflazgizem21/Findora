@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arama Sonuçları</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/arama_sonuc.css' %}">
+ </head>
+
+<body>
+
+  <div class="go-back">
+  <a href="javascript:history.back()">← Geri</a>
+</div>
+
+  <!-- Filtre Toggle Butonu (Sadece mobilde görünür) -->
+  <button id="toggleFilter" class="btn btn-info text-white d-md-none toggle-btn">Filtrele</button>
+
+  <div class="main-wrapper">
+    <!-- Sabit Filtre Kutusu -->
+    <aside class="filter-card">
+      <form method="get">
+        <label for="keyword">Anahtar Kelime</label>
+        <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Kelime girin">
+
+        <label for="durum">Durum</label>
+        <select id="durum" name="durum" class="form-control">
+          <option selected>Seçiniz</option>
+          <option value="buldum">Buldum</option>
+          <option value="kaydettim">Bulundu</option>
+        </select>
+
+        <label for="renk">Renk</label>
+        <input type="text" id="renk" name="renk" class="form-control">
+
+        <label for="konum">Konum</label>
+        <input type="text" id="konum" name="konum" class="form-control">
+
+        <button type="submit" class="btn btn-info text-white w-100">Filtrele</button>
+      </form>
+    </aside>
+
+    <!-- Kartlar Bölgesi -->
+    <main class="card-grid">
+      {% for kayit in kayitlar %}
+      <div class="card">
+        <img src="{{ kayit.resim.url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <p><strong>Durum:</strong> {{ kayit.durum }}</p>
+          <p><strong>Konum:</strong> {{ kayit.konum }}</p>
+          <p><strong>Renk:</strong> {{ kayit.renk }}</p>
+          <p><strong>Açıklama:</strong> {{ kayit.aciklama }}</p>
+          <a href="{% url 'esya_detay' kayit.id %}" class="btn-claim">Bu Eşya Benim!</a>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+  <script>
+  const toggleButton = document.getElementById('toggleFilter');
+  const filterCard = document.querySelector('.filter-card');
+
+  toggleButton.addEventListener('click', () => {
+    filterCard.classList.toggle('show');
+  });
+</script>
+
+</body>
+
+</html>

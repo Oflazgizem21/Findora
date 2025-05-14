@@ -1,0 +1,41 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yorum Yap | Findora</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/yorum_yap.css' %}">
+</head>
+<body>
+    <div class="comment-form-container">
+        <div class="comment-card">
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="comment-header">
+                <div class="comment-icon">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h2>Deneyimini Paylaş</h2>
+                <p>Findora hakkındaki düşüncelerin bizim için çok değerli 💖</p>
+            </div>
+            
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_yorum">Yorumun</label>
+                    <textarea id="id_yorum" name="yorum" class="form-control" placeholder="Findora deneyimini anlat..." required></textarea>
+                </div>
+                                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Yorumu Gönder
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
