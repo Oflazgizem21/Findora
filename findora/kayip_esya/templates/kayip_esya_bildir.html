@@ -20,12 +20,12 @@
     <div class="logo text-white fw-bold fs-3">
         FINDORA
     </div>
-    <nav class="menu d-flex gap-4">
-        <a href="{% url 'home' %}" class="text-white text-decoration-none">Anasayfa</a>
-        <a href="{% url 'kayip_esya_bildir' %}" class="text-white text-decoration-none{% if request.path == '/kayip-esya-bildir/' %}active{% endif %}">Kayıp Eşya Bildir</a>
-        <a href="{% url 'hakkimizda' %}" class="text-white text-decoration-none">Hakkımızda</a>
-        <a href="{% url 'iletisim' %}" class="text-white text-decoration-none">İletişim</a>
-    </nav>
+   <nav class="menu d-flex gap-4">
+    <a href="{% url 'home' %}" class="menu-link text-white text-decoration-none">Anasayfa</a>
+    <a href="{% url 'kayip_esya_bildir' %}" class="menu-link text-white text-decoration-none{% if request.path == '/kayip-esya-bildir/' %} active{% endif %}">Kayıp Eşya Bildir</a>
+    <a href="{% url 'hakkimizda' %}" class="menu-link text-white text-decoration-none">Hakkımızda</a>
+    <a href="{% url 'iletisim' %}" class="menu-link text-white text-decoration-none">İletişim</a>
+</nav>
 </header>
 
 

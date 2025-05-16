@@ -1,16 +1,19 @@
- :root {
-                --primary: linear-gradient(135deg, #FFB7B7, #A5DEE4);       /* Ana mavi (Findora'nın logosu) */
-                --primarytwo:
-              #FF9E9E;    /* Mor (orijinal ikincil renk korundu) */
-                --accent: #FF8066;        /* Coral (orijinal aksan rengi korundu) */
-                --light-bg: #f4f8fb;      /* Findora arka plan rengi */
-                --dark-text: #2D3047;     /* Koyu metin (orijinal korundu) */
-                --light-text: #888094;   /* Açık metin (orijinal korundu) */
-                --white: #FFFFFF;         /* Beyaz */
-                --success: #4CD97B;       /* Başarı rengi (orijinal korundu) */
-              
-            }
-            
+:root {
+  --primary: #E4B7B2;   /* Soft pembe-bej karışımı */
+  --secondary: #F4DCCB; /* Açık bej ton */
+  --accent: #D8A7A7;    /* Pastel gül kurusu */
+  --soft-bg: #FFF8F6;   /* Çok açık krem-pembe */
+  --dark-text: #3E3A39; /* Yumuşak koyu kahverengimsi gri */
+  --light-text: #A09090; /* Açık toz pembe-gri ton */
+  --success: #E8D5C4;   /* Yumuşak sıcak bej tonu */
+  --text: #3A3845;
+
+  /* Hakkımızda sayfasına özel ek renkler */
+  --about-gradient: linear-gradient(135deg, #EBCBC4, #F4DCCB); /* Pembe-bej geçiş */
+  --about-card-bg: rgba(255, 255, 255, 0.95); /* Yarı saydam beyaz */
+  --about-shadow: 0 10px 30px rgba(228, 183, 178, 0.15); /* Pembe-bej tonlu gölge */
+}
+
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -30,90 +33,75 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(13, 110, 253, 0.1); /* Mavi tonunda border */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-      .logo {
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #FFB7B7, #A5DEE4);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
     text-decoration: none;
-    letter-spacing: -1px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--light-text);
+    color: var(--dark-text);
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
-    padding: 0.5rem 0;
-    display: inline-block; /* Bu satırı ekledik */
+    padding: 0.5rem 1rem;
+    border-radius: 8px; /* normal durumda hafif oval */
 }
 
-.nav-links a:hover {
-    color: var(--primary);
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    transition: width 0.3s ease;
-    transform-origin: left center; /* Daha smooth animasyon için */
-}
-
-/* Hover efekti */
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* Aktif sayfa stilleri */
+.nav-links a:hover,
 .nav-links a.active {
-    color: var(--primary);
+    color: var(--white);
+    background-color: var(--primary);
     font-weight: 600;
+    border-radius: 50px; /* hover ve aktifte tam oval */
 }
 
-.nav-links a.active::after {
-    width: 100% !important;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
+/* aktif linkteki alt çizgiyi kaldırıyoruz */
+.nav-links a.active:after {
+    content: none;
 }
-.contact-hero {
+        
+        .contact-hero {
             text-align: center;
             padding: 6rem 5% 4rem;
-            background: linear-gradient(135deg, #FFB7B7, #A5DEE4);
-            color: white;
+            background-color: var(--white);
             margin-bottom: 3rem;
         }
         
-.contact-hero h1 {
+        .contact-hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            color: white;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             line-height: 1.2;
         }
         
-.contact-hero p {
+        .contact-hero p {
             max-width: 700px;
             margin: 0 auto;
             font-size: 1.2rem;
-            color:white;
+            color: var(--light-text);
             line-height: 1.8;
         }
         
-.contact-container {
+        .contact-container {
             max-width: 1200px;
             margin: 0 auto 6rem;
             padding: 0 5%;
@@ -122,7 +110,7 @@
             gap: 4rem;
         }
         
- .contact-info {
+        .contact-info {
             background: var(--white);
             padding: 3rem;
             border-radius: 20px;
@@ -133,7 +121,7 @@
             font-size: 1.8rem;
             margin-top: 0;
             margin-bottom: 2.5rem;
-            color:white !important;
+            color: var(--dark-text);
             position: relative;
         }
         
@@ -157,7 +145,8 @@
         .info-icon {
             width: 50px;
             height: 50px;
-            background: var(--primary); /* Düz mavi */
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -203,7 +192,8 @@
         }
         
         .social-links a:hover {
-            background: var(--primary); /* Düz mavi */
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
             transform: translateY(-3px);
         }
         
@@ -232,12 +222,6 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 2px;
         }
-        
-.contact-info h2:after,
-.contact-form h2:after,
-.footer-column h3:after {
-    background: var(--primary); /* Tek renk çizgi */
-}
         
         .form-group {
             margin-bottom: 1.8rem;
@@ -273,7 +257,7 @@
         }
         
         .submit-btn {
-            background: var(--primary); /* Düz mavi */
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: var(--white);
             border: none;
             padding: 1.2rem 2.5rem;
@@ -292,7 +276,7 @@
         
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.2); /* Mavi gölge */
+            box-shadow: 0 10px 20px rgba(0, 201, 167, 0.2);
         }
         
         .map-container {
@@ -310,52 +294,65 @@
             border: none;
         }
        
-        footer {
-            background: var(--dark-text);
-            color: var(--white);
-            padding: 5rem 5% 3rem;
-            text-align: center;
-            margin-top: 6rem;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            text-align: left;
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-        }
-        
-        .footer-column h3 {
-            color: var(--white);
-            margin-bottom: 1.8rem;
-            font-size: 1.2rem;
-            position: relative;
-        }
-        
-        .footer-column h3:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 3px;
-            bottom: -8px;
-            left: 0;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .footer-column p, .footer-column a {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1rem;
-            display: block;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column a:hover {
-            color: var(--primary);
-        }
+   footer {
+    background-color: var(--text);
+    color: var(--white);
+    padding: 5rem 5% 3rem;
+    text-align: center;
+    margin-top: 6rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+}
+
+.footer-column h3 {
+    color: var(--primary);
+    margin-bottom: 1.8rem;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    bottom: -8px;
+    left: 0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-column ul li a,
+.footer-column p,
+.footer-column a {
+    color: #ccc;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover,
+.footer-column a:hover {
+    color: white !important;
+}
+
         
         .copyright {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
