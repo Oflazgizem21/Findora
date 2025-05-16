@@ -1,0 +1,411 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }} Profilim</title>
+    <link rel="stylesheet" href="{% static 'css/profilim.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="profile-container">
+        <!-- SOL TARAF - SIDEBAR -->
+        <div class="profile-sidebar">
+            <div class="sidebar-header">
+                <a href="{% url 'home' %}" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Geri
+                </a>
+            </div>
+            
+            <div class="profile-card">
+                <div class="profile-photo-container">
+                    {% if user.profile_photo %}
+                        <img src="{{ user.profile_photo.url }}" alt="Profil Fotoğrafı" class="profile-photo">
+                    {% else %}
+                        <img src="{% static 'images/default_profil_foto.png' %}" alt="Varsayılan Profil Fotoğrafı" class="profile-photo">
+                    {% endif %}
+                </div>
+                
+                <div class="profile-info">
+                    <h2 class="username">{{ user.username }}</h2>
+                    <div class="profile-detail">
+                        <span class="detail-label">Ad Soyad:</span>
+                        <span class="detail-value">{{ user.full_name|default:"Belirtilmemiş" }}</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="detail-label">Doğum Tarihi:</span>
+                        <span class="detail-value">{{ user.birthdate|date:"d.m.Y"|default:"Belirtilmemiş" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account-settings">
+                <h3 class="settings-title"><i class="fas fa-cog"></i> Hesap Ayarları</h3>
+                <div class="settings-menu">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal" class="setting-item">
+                        <i class="fas fa-user-edit"></i> Bilgilerimi Güncelle
+                    </a>
+                    <a href="#" class="setting-item">
+                        <i class="fas fa-key"></i> Şifreyi Değiştir
+                    </a>
+                    <a href="{% url 'logout' %}" class="setting-item">
+                        <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+                    </a>
+                    <a href="#" class="setting-item text-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                        <i class="fas fa-trash-alt"></i> Hesabı Sil
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAĞ TARAF - ANA İÇERİK -->
+        <div class="profile-main-content">
+            <!-- Üst Bilgi ve Bildirimler -->
+            <div class="profile-header">
+                <div class="notification-bell">
+                    <button class="btn position-relative" type="button" id="bildirimDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell fa-lg"></i>
+                        {% if bildirimler|length > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ bildirimler|length }}
+                        </span>
+                        {% endif %}
+                    </button>
+            
+                    <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="bildirimDropdown">
+                        {% for bildirim in bildirimler|slice:":5" %}
+                        <li class="notification-item">
+                            <div class="notification-content">
+                                <a href="#" class="text-dark view-notification" 
+                                data-bildirim-id="{{ bildirim.id }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#bildirimDetayModal">
+                                    <strong>{{ bildirim.mesaj }}</strong>
+                                    <small class="text-muted">{{ bildirim.olusturulma_tarihi|timesince }} önce</small>
+                                </a>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="notification-item">
+                            <div class="notification-content">
+                                <span class="text-muted">Henüz bildiriminiz yok</span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% if bildirimler|length > 5 %}
+                        <li class="notification-item view-all">
+                            <a href="#" class="text-primary">Tümünü Görüntüle</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <!-- Sekmeler -->
+            <div class="profile-tabs">
+                <ul class="nav nav-tabs" id="profilSekmeler" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="kayip-tab" data-bs-toggle="tab" data-bs-target="#kayiplar" type="button" role="tab">
+                            <i class="fas fa-search-minus me-2"></i>Kaybettiklerim
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="buldu-tab" data-bs-toggle="tab" data-bs-target="#buldugun" type="button" role="tab">
+                            <i class="fas fa-search-plus me-2"></i>Bulduklarım
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="yorum-tab" data-bs-toggle="tab" data-bs-target="#yorumlarim" type="button" role="tab">
+                            <i class="fas fa-comments me-2"></i>Yorumlarım
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <!-- Kaybettiklerim -->
+                    <div class="tab-pane fade show active" id="kayiplar" role="tabpanel" aria-labelledby="kayip-tab">
+                        {% if kaybettiklerim %}
+                            <div class="items-grid">
+                                {% for kayit in kaybettiklerim %}
+                                    <div class="item-card">
+                                        {% if kayit.resim %}
+                                            <img src="{{ kayit.resim.url }}" class="item-image" alt="{{ kayit.baslik }}">
+                                        {% else %}
+                                            <img src="{% static 'images/default_gorsel.png' %}" class="item-image" alt="Varsayılan Görsel">
+                                        {% endif %}
+                                        <div class="item-body">
+                                            <h5 class="item-title">{{ kayit.baslik }}</h5>
+                                            <div class="item-meta">
+                                                <span class="item-location"><i class="fas fa-map-marker-alt"></i> {{ kayit.konum }}</span>
+                                                <span class="item-date"><i class="far fa-calendar-alt"></i> {{ kayit.tarih|date:"d.m.Y" }}</span>
+                                            </div>
+                                            <p class="item-description">{{ kayit.tanim|truncatechars:100 }}</p>
+                                            <div class="item-actions">
+                                                <a href="{% url 'kayit_duzenle' kayit.id %}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i> Düzenle
+                                                </a>
+                                                <a href="{% url 'kayit_sil' kayit.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                                    <i class="fas fa-trash"></i> Sil
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-search-minus fa-3x mb-3"></i>
+                                <h4>Henüz kayıp eşya bildiriminiz yok</h4>
+                                <p>Kaybettiğiniz eşyaları burada görebilirsiniz.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Bulduklarım -->
+                    <div class="tab-pane fade" id="buldugun" role="tabpanel" aria-labelledby="buldu-tab">
+                        {% if bulduklarim %}
+                            <div class="items-grid">
+                                {% for kayit in bulduklarim %}
+                                    <div class="item-card">
+                                        {% if kayit.resim %}
+                                            <img src="{{ kayit.resim.url }}" class="item-image" alt="{{ kayit.baslik }}">
+                                        {% else %}
+                                            <img src="{% static 'images/default_gorsel.png' %}" class="item-image" alt="Varsayılan Görsel">
+                                        {% endif %}
+                                        <div class="item-body">
+                                            <h5 class="item-title">{{ kayit.baslik }}</h5>
+                                            <div class="item-meta">
+                                                <span class="item-location"><i class="fas fa-map-marker-alt"></i> {{ kayit.konum }}</span>
+                                                <span class="item-date"><i class="far fa-calendar-alt"></i> {{ kayit.tarih|date:"d.m.Y" }}</span>
+                                            </div>
+                                            <p class="item-description">{{ kayit.tanim|truncatechars:100 }}</p>
+                                            <div class="item-actions">
+                                                <a href="{% url 'kayit_duzenle' kayit.id %}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i> Düzenle
+                                                </a>
+                                                <a href="{% url 'kayit_sil' kayit.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                                    <i class="fas fa-trash"></i> Sil
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-search-plus fa-3x mb-3"></i>
+                                <h4>Henüz bulduğunuz eşya yok</h4>
+                                <p>Bulduğunuz eşyaları burada görebilirsiniz.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+<!-- Yorumlarım -->
+<div class="tab-pane fade" id="yorumlarim" role="tabpanel" aria-labelledby="yorum-tab">
+    {% if yorumlar %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">{{ yorumlar|length }} yorum</h5>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                    <i class="fas fa-sort me-1"></i> Sırala
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="?sort=newest">En yeni</a></li>
+                    <li><a class="dropdown-item" href="?sort=oldest">En eski</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="comment-list">
+            {% for yorum in yorumlar %}
+            <div class="comment-item">
+                <div class="comment-header">
+                    <span class="comment-badge bg-primary rounded-pill me-2">
+                        {{ yorum.kayit.baslik|truncatechars:20 }}
+                    </span>
+                    <small class="text-muted">{{ yorum.tarih|date:"d.m.Y H:i" }}</small>
+                </div>
+                
+                <div class="comment-body">
+                    <p>{{ yorum.yorum }}</p>
+                </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="far fa-comment-dots fa-3x text-muted mb-3"></i>
+            <h5 class="text-muted">Henüz yorum yapmamışsınız</h5>
+            <p>Yaptığınız yorumlar burada görünecek</p>
+        </div>
+    {% endif %}
+</div>
+
+    <!-- Profil Güncelleme Modal -->
+    <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="updateProfileModalLabel">Bilgilerinizi Güncelleyin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" enctype="multipart/form-data" action="{% url 'profil_guncelle' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- İsim Soyisim -->
+                    <div class="mb-3">
+                    <label for="full_name" class="form-label">İsim Soyisim</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" value="{{ request.user.full_name }}">
+                    </div>
+        
+                    <!-- Profil Fotoğrafı -->
+                    <div class="mb-3">
+                    <label for="profile_pic" class="form-label">Profil Fotoğrafı</label>
+                    <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+                    </div>
+        
+                    <!-- Kullanıcı Adı -->
+                    <div class="mb-3">
+                    <label for="username" class="form-label">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ request.user.username }}">
+                    </div>
+        
+                    <!-- E-posta -->
+                    <div class="mb-3">
+                    <label for="email" class="form-label">E-posta</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}">
+                    </div>
+        
+                    <!-- Doğum Tarihi -->
+                    <div class="mb-3">
+                    <label for="birthdate" class="form-label">Doğum Tarihi</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ request.user.birthdate|date:'Y-m-d' }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Güncellemeyi Kaydet</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hesap Silme Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteAccountModalLabel">Hesabı Sil</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Dikkat!</strong> Bu işlem geri alınamaz. Tüm verileriniz kalıcı olarak silinecektir.
+                    </div>
+                    <p>Hesabınızı silmek istediğinizden emin misiniz?</p>
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="passwordConfirm" class="form-label">Onay için şifrenizi girin:</label>
+                            <input type="password" class="form-control" id="passwordConfirm" name="password" required>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                            <button type="submit" class="btn btn-danger">Hesabımı Sil</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bildirim Detay Modalı -->
+    <div class="modal fade" id="bildirimDetayModal" tabindex="-1" aria-labelledby="bildirimDetayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bildirimDetayModalLabel">Bildirim Detayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="bildirimDetayIcerik">
+                    <!-- Buraya AJAX ile içerik yüklenecek -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Aktif sekme durumunu localStorage'da sakla
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sekme değişikliklerini dinle
+            var tabElms = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabElms.forEach(function(tabEl) {
+                tabEl.addEventListener('shown.bs.tab', function (event) {
+                    localStorage.setItem('activeTab', event.target.id);
+                });
+            });
+
+            // Kayıtlı aktif sekme varsa onu yükle
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                var triggerEl = document.querySelector('#' + activeTab);
+                if (triggerEl) {
+                    bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+                }
+            }
+
+            // Bildirimleri okundu olarak işaretle
+            var notificationBell = document.getElementById('bildirimDropdown');
+            if (notificationBell) {
+                notificationBell.addEventListener('click', function() {
+                    // Burada AJAX çağrısı yaparak bildirimleri okundu olarak işaretleyebilirsiniz
+                    console.log('Bildirimler görüntülendi, okundu olarak işaretleniyor...');
+                });
+            }
+        });
+
+        // Bildirim detaylarını yükle
+        document.addEventListener('DOMContentLoaded', function() {
+            // Bildirim detaylarını yükleme
+            document.querySelectorAll('.view-notification').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const bildirimId = this.getAttribute('data-bildirim-id');
+                    
+                    // AJAX ile bildirim detaylarını getir
+                    fetch(`/bildirim-detay/${bildirimId}/`)
+                        .then(response => response.text())
+                        .then(html => {
+                            document.getElementById('bildirimDetayIcerik').innerHTML = html;
+                            
+                            // Bildirimi okundu olarak işaretle
+                            fetch(`/bildirim-okundu/${bildirimId}/`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById('bildirimDetayIcerik').innerHTML = 
+                                '<div class="alert alert-danger">Bildirim detayları yüklenirken bir hata oluştu.</div>';
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
