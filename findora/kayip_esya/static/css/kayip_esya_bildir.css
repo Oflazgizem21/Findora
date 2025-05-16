@@ -1,5 +1,5 @@
 body {
-    background-image: url("/static/images/kayip_esya_bildirarkaplan.jpg");
+    background-image: url("/static/images/arkaplan.jpg");
     background-size: cover; /* Resmi ekranın tamamına yayar*/
     background-position: top left; /* Resmi ortalar */
     background-repeat: no-repeat; /* Resmin tekrar etmesini engeller */
@@ -21,56 +21,28 @@ body {
     background: transparent;
 }
 
-.menu-link {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-decoration: none;
-    position: relative;
-    display: inline-block;
+
+/* navbar kısmı */
+.custom-header .menu .menu-link {
+  color: white !important; /* Yazı rengi daima beyaz */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
 }
 
-/*aktif sayfa menu linki*/
-.menu-link.active {
-    color: #ffcc00 !important;
-    font-weight: 700; /*daha kalın yazı*/
-    transform: scale(1.05); /*biraz büyümesi için*/
+.custom-header .menu .menu-link:hover {
+  color: white !important; /* Yazı rengi yine beyaz */
+  background-color: #C9BEB8 !important; /* Pastel turkuaz arkaplan */
 }
 
-.menu-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%; /* Tam genişlikte çizgi */
-    height: 2px;
-    background: linear-gradient(to right, #ffcc00, #ffaa00); /* Çizgi rengi */
-    background-color: #ffcc00; /* Çizgi rengi */
-    transition: none; /* Animasyonu kapat */
-    display: none !important; /* Aktif sayfa için çizgiyi gizle */
+.custom-header .menu .menu-link.active {
+  color: white !important;
+  background-color: #C9BEB8  !important; /* Daha koyu turkuaz (aktif sayfa) */
+  font-weight: 700;
 }
-
-
-.menu-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: white;
-    display: none !important;
-}
-
-.menu-link:hover {
-    color: #ffcc00; /* İsteğe göre farklı bir hover rengi */
-    transform: scale(1.1);
-}
-
-.menu-link:hover::after {
-    width: 100%;
-}
-
 
 
 

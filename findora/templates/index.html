@@ -165,9 +165,11 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="empty-testimonials">
-                    <i class="far fa-comment-dots"></i>
-                    <p>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+              <div class="empty-testimonials">
+                    <div class="empty-message-container">
+                        <i class="far fa-comment-dots"></i>
+                        <p>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -179,7 +181,7 @@
         </div>
 
         <div class="add-comment">
-            <a href="#" class="add-comment-btn">
+            <a href="{% url 'yorum_yap' %}" class="add-comment-btn">
                 <i class="fas fa-plus"></i> Yorum Yap
             </a>
         </div>
@@ -333,7 +335,7 @@
             <div class="footer-column">
                 <h3>Findora</h3>
                 <p>Kayıp eşyalarınızı güvenle bulmanın en hızlı çözümü.
-                    Güvenilir ve etkili hizmet anlayışımızla yanınızdayız.</p>
+                    Güvenilir ve etkili hizmet anlayışımızla yanınızdayız.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
