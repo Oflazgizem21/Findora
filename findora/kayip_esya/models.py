@@ -33,3 +33,30 @@ class Kayit(models.Model):
 
     def __str__(self):
         return self.tanim
+    
+class Kanit(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Beklemede'),
+        ('approved', 'Onaylandı'),
+        ('rejected', 'Reddedildi'),
+    ]
+        
+    ilgili_kayit = models.ForeignKey(Kayit, on_delete=models.CASCADE)  # Bu kaydın bulunduğu eşya
+    aciklama = models.TextField()  # Kanıt açıklaması
+    foto = models.ImageField(upload_to='kanitlar/', blank=True, null=True)  # Kanıt fotoğrafı
+    kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Kullanıcı")
+    secilen_esya = models.ForeignKey(Kayit, on_delete=models.CASCADE, related_name='secilen_esya', null=True, blank=True)  # Kullanıcının seçtiği kayıp eşya
+    tarih = models.DateTimeField(auto_now_add=True)  # Kanıt gönderim tarihi
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
+    admin_mesaji = models.TextField(blank=True, null=True, verbose_name="Admin Mesajı")
+
+    def _str_(self):
+        return f"Kanit - {self.kullanici.username if self.kullanici else 'Bilinmeyen'} - {self.ilgili_kayit.tanim}"
+    
+class GenelYorum(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Kullanıcıyı bağlıyoruz
+    yorum = models.TextField(verbose_name="Yorum", max_length=500)  # Yorumun içeriği
+    tarih = models.DateTimeField(auto_now_add=True, verbose_name="Yorum Tarihi")  # Yorumun tarihi
+
+    def __str__(self):
+        return f"Yorum: {self.yorum[:50]}..."  # Yorumun başını döndürüyoruz, özet için

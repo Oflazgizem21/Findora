@@ -1,5 +1,5 @@
 from django import forms
-from .models import Kayit
+from .models import Kayit, Kanit, GenelYorum
 
 class KayitForm(forms.ModelForm):
     custom_tur = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -29,3 +29,15 @@ class KayitForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class KanitForm(forms.ModelForm):
+    class Meta:
+        model = Kanit
+        fields = ['aciklama', 'foto']  # isim ve soyisim çıkarıldı
+
+class YorumForm(forms.ModelForm):
+    class Meta:
+        model = GenelYorum
+        fields = ['yorum']  # Yalnızca 'yorum' alanını alıyoruz
+
+    yorum = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Yorumunuzu buraya yazın...', 'rows': 5, 'cols': 40}), label='Yorum')
