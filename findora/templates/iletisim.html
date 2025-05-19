@@ -84,44 +84,52 @@
     
         <div class="contact-form">
             <h2>Mesaj Formu</h2>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Adınız Soyadınız</label>
-                    <input type="text" id="name" class="form-control" placeholder="Adınız ve soyadınız" required>
+             {% if messages %}
+            {% for message in messages %}
+                <div style="background-color: var(--success); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    {{ message }}
                 </div>
-    
-                <div class="form-group">
-                    <label for="email">E-posta Adresiniz</label>
-                    <input type="email" id="email" class="form-control" placeholder="E-posta adresiniz" required>
-                </div>
-    
-                <div class="form-group">
-                    <label for="phone">Telefon Numaranız</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Telefon numaranız (isteğe bağlı)">
-                </div>
-    
-                <div class="form-group">
-                    <label for="subject">Konu</label>
-                    <select id="subject" class="form-control" required>
-                        <option value="" disabled selected>Konu seçiniz</option>
-                        <option value="general">Genel Soru</option>
-                        <option value="lost-item">Kayıp Eşya</option>
-                        <option value="found-item">Bulunan Eşya</option>
-                        <option value="feedback">Geri Bildirim</option>
-                        <option value="business">İş Birliği</option>
-                        <option value="other">Diğer</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label for="message">Mesajınız</label>
-                    <textarea id="message" class="form-control" placeholder="Mesajınızı detaylı şekilde yazın..." required></textarea>
-                </div>
-    
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> Mesajı Gönder
-                </button>
-            </form>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+                {{ form.phone.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.subject.label_tag }}
+                {{ form.subject }}
+                {{ form.subject.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.message.label_tag }}
+                {{ form.message }}
+                {{ form.message.errors }}
+            </div>
+
+            <button type="submit" style="background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; padding: 1rem 2rem; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer;">
+                Gönder
+            </button>
+        </form>
+    </div>
         </div>
     
         <div class="map-container">

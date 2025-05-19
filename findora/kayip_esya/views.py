@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import datetime
-from .forms import KayitForm, YorumForm
-from .models import Kayit, GenelYorum, Kanit
+from .forms import KayitForm, YorumForm, ContactForm
+from .models import Kayit, GenelYorum, Kanit, Bildirim
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.http import JsonResponse, HttpResponse
 
 def index(request):
     # Yorumları veritabanından alıyoruz
@@ -133,3 +135,56 @@ def yorum_yap(request):
         form = YorumForm()
 
     return render(request, 'yorum_yap.html', {'form': form})
+
+@login_required
+def yorum_sil(request, yorum_id):
+    yorum = get_object_or_404(GenelYorum, id=yorum_id, user=request.user)
+    if request.method == "POST":
+        yorum.delete()
+        return redirect('profilim')
+    return redirect('profilim')
+
+def profilim(request):
+    bildirimler = Bildirim.objects.filter(kullanici=request.user).order_by('-olusturulma_tarihi')
+    
+    context = {
+        'bildirimler': bildirimler,
+        # varsa diğer context verilerini de ekle
+    }
+    return render(request, 'profilim.html', context)
+
+def bildirim_detay(request, bildirim_id):
+    bildirim = get_object_or_404(Bildirim, id=bildirim_id, kullanici=request.user)
+    okunmamis_bildirim_sayisi = Bildirim.objects.filter(kullanici=request.user, okundu=False).count()
+    context = {
+        'bildirim': bildirim,
+        'kanit': bildirim.kanit,
+        'okunmamis_bildirim_sayisi': okunmamis_bildirim_sayisi,
+    }
+    html = render_to_string('bildirim_detay_modal.html', context, request=request)
+    return HttpResponse(html)
+
+def bildirim_okundu(request, bildirim_id):
+    if request.method == "POST" and request.user.is_authenticated:
+        bildirim = get_object_or_404(Bildirim, id=bildirim_id, kullanici=request.user)
+        if not bildirim.okundu:
+            bildirim.okundu = True
+            bildirim.save()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'fail'}, status=400)
+    
+def iletisim(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False) 
+            if request.user.is_authenticated: #Oturum açıksa kullanıcıyı bağla
+                contact.user = request.user
+            contact.save() #şimdi kaydet
+            messages.success(request, 'Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.')
+            return redirect('iletisim')
+    else:
+        form = ContactForm()
+    
+    return render(request, 'iletisim.html', {'form': form})
+

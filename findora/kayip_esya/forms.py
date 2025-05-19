@@ -1,5 +1,5 @@
 from django import forms
-from .models import Kayit, Kanit, GenelYorum
+from .models import Kayit, Kanit, GenelYorum, ContactMessage
 
 class KayitForm(forms.ModelForm):
     custom_tur = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -41,3 +41,36 @@ class YorumForm(forms.ModelForm):
         fields = ['yorum']  # Yalnızca 'yorum' alanını alıyoruz
 
     yorum = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Yorumunuzu buraya yazın...', 'rows': 5, 'cols': 40}), label='Yorum')
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'phone', 'subject', 'message']
+        
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Adınız ve soyadınız',
+                'id': 'name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'E-posta adresiniz',
+                'id': 'email'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Telefon numaranız (isteğe bağlı)',
+                'id': 'phone'
+            }),
+            'subject': forms.Select(attrs={
+                'class': 'form-control',
+                'id': 'subject'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Mesajınızı detaylı şekilde yazın...',
+                'rows': 5,
+                'id': 'message'
+            }),
+        }

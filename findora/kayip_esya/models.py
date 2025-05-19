@@ -60,3 +60,46 @@ class GenelYorum(models.Model):
 
     def __str__(self):
         return f"Yorum: {self.yorum[:50]}..."  # Yorumun başını döndürüyoruz, özet için
+
+class Bildirim(models.Model):
+    kullanici = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    kanit = models.ForeignKey('Kanit', on_delete=models.CASCADE, null=True, blank=True)  # yeni ilişki
+    mesaj = models.CharField(max_length=255)
+    olusturulma_tarihi = models.DateTimeField(auto_now_add=True)
+    okundu = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.mesaj} - {self.olusturulma_tarihi}"
+
+class ContactMessage(models.Model):
+    SUBJECT_CHOICES = [
+        ('general', 'Genel Soru'),
+        ('lost-item', 'Kayıp Eşya'),
+        ('found-item', 'Bulunan Eşya'),
+        ('feedback', 'Geri Bildirim'),
+        ('business', 'İş Birliği'),
+        ('other', 'Diğer'),
+    ]
+    
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True, blank=True  # anonymous kullanıcıya da izin vermek için
+    )
+
+    name = models.CharField(max_length=100, verbose_name="Ad Soyad")
+    email = models.EmailField(verbose_name="E-posta")
+    phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Telefon")
+    subject = models.CharField(max_length=20, choices=SUBJECT_CHOICES, verbose_name="Konu")
+    message = models.TextField(verbose_name="Mesaj")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Oluşturulma Tarihi")
+
+    admin_cevabi = models.TextField(blank=True, null=True, verbose_name="Admin Cevabı")
+    
+    class Meta:
+        verbose_name = "İletişim Mesajı"
+        verbose_name_plural = "İletişim Mesajları"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.get_subject_display()}"

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="profile-container">
         <!-- SOL TARAF - SIDEBAR -->
@@ -70,7 +69,7 @@
                     <button class="btn position-relative" type="button" id="bildirimDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-bell fa-lg"></i>
                         {% if bildirimler|length > 0 %}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <span id="bildirim-sayisi" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                             {{ bildirimler|length }}
                         </span>
                         {% endif %}
@@ -98,7 +97,7 @@
                         {% endfor %}
                         {% if bildirimler|length > 5 %}
                         <li class="notification-item view-all">
-                            <a href="#" class="text-primary">Tümünü Görüntüle</a>
+                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#tumBildirimlerModal">Tümünü Görüntüle</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -122,6 +121,16 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="yorum-tab" data-bs-toggle="tab" data-bs-target="#yorumlarim" type="button" role="tab">
                             <i class="fas fa-comments me-2"></i>Yorumlarım
+                        </button>
+                    </li>
+                                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bildirim-tab" data-bs-toggle="tab" data-bs-target="#bildirimler" type="button" role="tab">
+                            <i class="fas fa-bell me-2"></i>Kayıp Eşya Bildirimlerim
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="iletisim-tab" data-bs-toggle="tab" data-bs-target="#iletisimmesajlari" type="button" role="tab">
+                            <i class="fas fa-envelope me-2"></i>İletişim Mesajlarım
                         </button>
                     </li>
                 </ul>
@@ -205,47 +214,172 @@
                         {% endif %}
                     </div>
 
-<!-- Yorumlarım -->
-<div class="tab-pane fade" id="yorumlarim" role="tabpanel" aria-labelledby="yorum-tab">
-    {% if yorumlar %}
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="mb-0">{{ yorumlar|length }} yorum</h5>
-            <div class="dropdown">
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
-                    <i class="fas fa-sort me-1"></i> Sırala
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="?sort=newest">En yeni</a></li>
-                    <li><a class="dropdown-item" href="?sort=oldest">En eski</a></li>
-                </ul>
+                    <!-- Yorumlarım -->
+                    <div class="tab-pane fade" id="yorumlarim" role="tabpanel" aria-labelledby="yorum-tab">
+                        {% if yorumlar %}
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">{{ yorumlar|length }} yorum</h5>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                                        <i class="fas fa-sort me-1"></i> Sırala
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="?sort=newest">En yeni</a></li>
+                                        <li><a class="dropdown-item" href="?sort=oldest">En eski</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="comment-list">
+                                {% for yorum in yorumlar %}
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <span class="comment-badge bg-primary rounded-pill me-2">
+                                            {{ yorum.kayit.baslik|truncatechars:20 }}
+                                        </span>
+                                        <small class="text-muted">{{ yorum.tarih|date:"d.m.Y H:i" }}</small>
+                                    </div>
+                                    
+                                    <div class="comment-body">
+                                        <p>{{ yorum.yorum }}</p>
+                                    </div>
+                                    
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="far fa-comment-dots fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">Henüz yorum yapmamışsınız</h5>
+                                <p>Yaptığınız yorumlar burada görünecek</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Kayıp Eşya Bildirimlerim -->
+                    <div class="tab-pane fade" id="bildirimler" role="tabpanel" aria-labelledby="bildirim-tab">
+                        {% if kayip_bildirimler %}
+                            <div class="message-cards">
+                                {% for bildirim in kayip_bildirimler %}
+                                    <div class="card message-card {% if bildirim.kanit.status == 'approved' %}has-reply{% endif %}">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <span class="badge 
+                                                {% if bildirim.kanit.status == 'approved' %}bg-success
+                                                {% elif bildirim.kanit.status == 'rejected' %}bg-danger
+                                                {% else %}bg-secondary{% endif %}">
+                                                {% if bildirim.kanit.status == 'approved' %}Onaylandı
+                                                {% elif bildirim.kanit.status == 'rejected' %}Reddedildi
+                                                {% else %}Beklemede{% endif %}
+                                            </span>
+                                            <small class="text-muted">{{ bildirim.olusturulma_tarihi|date:"d.m.Y H:i" }}</small>
+                                        </div>
+                                        <div class="card-body">
+                                                <div class="admin-reply">
+                                                    <div class="reply-header">
+                                                        <span class="fw-bold">🔔 Geri Bildirim</span>
+                                                    </div>
+                                                    <div class="reply-content">
+                                                        <p>{{ bildirim.mesaj }}</p>
+                                                    </div>
+                                                </div>
+                                            <div class="mb-2">
+                                                <strong>Eşya:</strong> {{ bildirim.kanit.ilgili_kayit.tanim }}
+                                            </div>
+                                            <div class="text-end">
+                                                <a href="#" class="btn btn-sm btn-outline-primary rounded-pill view-notification"
+                                                data-bildirim-id="{{ bildirim.id }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#bildirimDetayModal">
+                                                    <i class="fas fa-search me-1"></i> Detayları İncele
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash fa-3x mb-3"></i>
+                                <h4>Henüz kayıp eşya bildiriminiz yok</h4>
+                                <p>Kayıp eşya bildirimleriniz burada görünecek</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- İletişim Mesajlarım Sekmesi -->
+                    <div class="tab-pane fade" id="iletisimmesajlari" role="tabpanel" aria-labelledby="iletisim-tab">
+                        <div class="message-cards">
+                            {% for mesaj in iletisim_mesajlari %}
+                                <div class="card message-card {% if mesaj.admin_cevabi %}has-reply{% endif %}">
+                                    <div class="card-header">
+                                        <span class="badge bg-primary">{{ mesaj.get_subject_display }}</span>
+                                        <small class="text-muted">{{ mesaj.created_at|date:"d F Y" }}</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <blockquote class="user-message">
+                                            <p><span class="me-1">❓</span>{{ mesaj.message }}</p>
+                                        </blockquote>
+                                        
+                                        {% if mesaj.admin_cevabi %}
+                                            <div class="admin-reply">
+                                                <div class="reply-header">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <span class="text-success fw-bold">Yanıtlandı</span>
+                                                </div>
+                                                <div class="reply-content">
+                                                    {{ mesaj.admin_cevabi }}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="pending-reply">
+                                                <i class="fas fa-clock text-warning"></i>
+                                                <span>Yanıt bekleniyor</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="empty-state">
+                                    <i class="fas fa-envelope-open-text fa-3x mb-3"></i>
+                                    <h4>Henüz iletişim mesajınız yok</h4>
+                                    <p>İletişim formundan gönderdiğiniz mesajlar burada listelenecek.</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+    <!-- Tüm Bildirimler Modalı -->
+    <div class="modal fade" id="tumBildirimlerModal" tabindex="-1" aria-labelledby="tumBildirimlerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tumBildirimlerModalLabel">Tüm Bildirimler</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {% for bildirim in bildirimler %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    <strong>{{ bildirim.mesaj }}</strong>
+                                    <small class="text-muted ms-2">{{ bildirim.olusturulma_tarihi|date:"d.m.Y H:i" }}</small>
+                                </span>
+                                <a href="#" class="btn btn-sm btn-outline-primary view-notification"
+                                data-bildirim-id="{{ bildirim.id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#bildirimDetayModal"
+                                data-bs-dismiss="modal">
+                                    <i class="fas fa-search me-1"></i> Detay
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">Henüz bildiriminiz yok.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="comment-list">
-            {% for yorum in yorumlar %}
-            <div class="comment-item">
-                <div class="comment-header">
-                    <span class="comment-badge bg-primary rounded-pill me-2">
-                        {{ yorum.kayit.baslik|truncatechars:20 }}
-                    </span>
-                    <small class="text-muted">{{ yorum.tarih|date:"d.m.Y H:i" }}</small>
-                </div>
-                
-                <div class="comment-body">
-                    <p>{{ yorum.yorum }}</p>
-                </div>
-                
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty-state">
-            <i class="far fa-comment-dots fa-3x text-muted mb-3"></i>
-            <h5 class="text-muted">Henüz yorum yapmamışsınız</h5>
-            <p>Yaptığınız yorumlar burada görünecek</p>
-        </div>
-    {% endif %}
-</div>
 
     <!-- Profil Güncelleme Modal -->
     <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
@@ -340,132 +474,10 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
                 </div>
-    <title>Profilim</title>
-    <link rel="stylesheet" href="{% static 'css/profilim.css' %}">
-    <!-- Bootstrap JS (Popper ile birlikte) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-
-</head>
-<body>
-    <div class="container">
-        <!-- SOL TARAF -->
-        <div class="sidebar">
-            <div class="go-back">
-                <a href="{% url 'home' %}" class="back-button">⬅ Geri</a>
-            </div>
-
-            <div class="profile-card">
-                {% if user.profile_photo %}
-                    <img src="{{ user.profile_photo.url }}" alt="Profil Fotoğrafı" class="profile-photo">
-                {% else %}
-                    <img src="{% static 'default_gorsel.png' %}" alt="Varsayılan Profil Fotoğrafı" class="profile-photo">
-                {% endif %}
-                <h2>{{ user.username }}</h2>
-                <p><strong>Ad Soyad:</strong> {{ user.full_name }} </p>
-                <p><strong>Doğum Tarihi:</strong> {{ user.birthdate }}</p>
-            </div>
-
-            <div class="account-settings">
-                <h3>⚙ Hesap Ayarları</h3>
-            <!-- Bilgilerimi Güncelle Butonu -->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#updateProfileModal" class="account-action">
-                <i class="fas fa-user-edit"></i> Bilgilerimi Güncelle
-            </a>
-
-             <!-- Şifreyi Değiştir Butonu -->
-             <a href="#" class="account-action">
-                <i class="fas fa-key"></i> Şifreyi Değiştir
-            </a> 
-
-            <!-- Çıkış Yap Butonu -->
-            <a href="{% url 'logout' %}" class="account-action">
-                <i class="fas fa-arrow-right-from-bracket"></i> Çıkış Yap
-            </a>
-            <!-- Hesabı Sil Butonu -->
-            <a href="#" class="account-action">
-                     <i class="far fa-trash-can"></i> Hesabı Sil
-            </a>
-            
-       
-            </div>
-        </div>
-
-    
-  
-
-        <!-- SAĞ TARAF -->
-        <div class="main-content">
-            <div id="kayiplar" class="kayiplar-card">
-                <h2>💔 Kaybettiklerim</h2>
-                {% if kaybettiklerim %}
-                    <ul class="esya-listesi">
-                        {% for kayit in kaybettiklerim %}
-                            <li class="esya-item">
-                                <strong>{{ kayit.baslik }}</strong> <br>
-                                <span>{{ kayit.konum }} - {{ kayit.tarih }}</span><br>
-                                <p>Açıklama: {{ kayit.aciklama }}</p>
-                                {% if kayit.resim %}
-                                    <img src="{{ kayit.resim.url }}" width="150" />
-                                {% endif %}
-                                <br>
-                                <a href="#">✏ Düzenle</a> |
-                                <a href="#" onclick="return confirm('Silmek istediğine emin misin aşkım? 😢')">🗑 Sil</a>
-                            </li>
-                            <hr>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Henüz bildirdiğiniz kayıp eşya yok 😕</p>
-                {% endif %}
-            </div>
-
-            <div id="buldugun" class="buldugun-card">
-                <h2>💖 Bulduklarım</h2>
-                {% if bulduklarim %}
-                    <ul class="esya-listesi">
-                        {% for kayit in bulduklarim %}
-                            <li class="esya-item">
-                                <strong>{{ kayit.baslik }}</strong> <br>
-                                <span>{{ kayit.konum }} - {{ kayit.tarih }}</span><br>
-                                <p>Açıklama: {{ kayit.tanim }}</p>
-                                {% if kayit.resim %}
-                                    <img src="{{ kayit.resim.url }}" width="150" />
-                                {% endif %}
-                                <br>
-                                <a href="#">✏ Düzenle</a> |
-                                <a href="#" onclick="return confirm('Silmek istediğine emin misin balım? 😢')">🗑 Sil</a>
-                            </li>
-                            <hr>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Henüz bulduğunuz eşya yok 😕</p>
-                {% endif %}
-            </div>
-
-            <h2>Yaptığım Yorumlar</h2>
-            <div class="yorum-container">
-                {% for yorum in yorumlar %}
-                    <div class="yorum-karti">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ yorum.user.username }}</h5>
-                            <p class="card-text">{{ yorum.yorum }}</p>
-                            <footer class="blockquote-footer">{{ yorum.tarih }}</footer>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>Henüz yorum yapmadınız.</p>
-                {% endfor %}
             </div>
         </div>
     </div>
-
-
+   
     <script>
         // Aktif sekme durumunu localStorage'da sakla
         document.addEventListener('DOMContentLoaded', function() {
@@ -509,7 +521,9 @@
                         .then(response => response.text())
                         .then(html => {
                             document.getElementById('bildirimDetayIcerik').innerHTML = html;
+                            document.getElementById('bildirimDetayIcerik').setAttribute('data-bildirim-id', bildirimId);
                             
+                            /*
                             // Bildirimi okundu olarak işaretle
                             fetch(`/bildirim-okundu/${bildirimId}/`, {
                                 method: 'POST',
@@ -518,6 +532,8 @@
                                     'Content-Type': 'application/json'
                                 }
                             });
+                            */
+                            
                         })
                         .catch(error => {
                             console.error('Error:', error);
@@ -527,81 +543,54 @@
                 });
             });
         });
-    </script>
 
-<!-- Modal -->
-<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="updateProfileModalLabel">Bilgilerinizi Güncelleyin</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="POST" enctype="multipart/form-data" action="#">
-          {% csrf_token %}
-          <div class="modal-body">
-            <!-- İsim Soyisim -->
-            <div class="mb-3">
-              <label for="full_name" class="form-label">İsim Soyisim</label>
-              <input type="text" class="form-control" id="full_name" name="full_name" value="{{ request.user.full_name }}">
-            </div>
-  
-            <!-- Profil Fotoğrafı -->
-            <div class="mb-3">
-              <label for="profile_pic" class="form-label">Profil Fotoğrafı</label>
-              <input type="file" class="form-control" id="profile_pic" name="profile_pic">
-            </div>
-  
-            <!-- Kullanıcı Adı -->
-            <div class="mb-3">
-              <label for="username" class="form-label">Kullanıcı Adı</label>
-              <input type="text" class="form-control" id="username" name="username" value="{{ request.user.username }}">
-            </div>
-  
-            <!-- E-posta -->
-            <div class="mb-3">
-              <label for="email" class="form-label">E-posta</label>
-              <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}">
-            </div>
-  
-            <!-- Doğum Tarihi -->
-            <div class="mb-3">
-              <label for="birthdate" class="form-label">Doğum Tarihi</label>
-              <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ request.user.birthdate|date:'Y-m-d' }}">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Güncellemeyi Kaydet</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-
-
-      
-
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function openModal() {
-            document.getElementById("updateModal").style.display = "block";
-        }
-        
-        function closeModal() {
-            document.getElementById("updateModal").style.display = "none";
-        }
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById("updateModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
+            return cookieValue;
         }
-       </script>
-        
-      
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('bildirimDetayModal');
+            modal.addEventListener('hide.bs.modal', function () {
+                // Bildirim ID'sini içerikten al
+                const detayIcerik = document.getElementById('bildirimDetayIcerik');
+                const bildirimId = detayIcerik.getAttribute('data-bildirim-id');
+
+                if (bildirimId) {
+                    fetch(`/bildirim-okundu/${bildirimId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Bildirim sayısını azalt
+                            const sayiElem = document.getElementById('bildirim-sayisi');
+                            if (sayiElem) {
+                                let sayi = parseInt(sayiElem.textContent);
+                                if (sayi > 0) {
+                                    sayiElem.textContent = sayi - 1;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+
+    </script>
 </body>
 </html>

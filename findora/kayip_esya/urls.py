@@ -10,5 +10,9 @@ urlpatterns = [
     path('kayit/<int:pk>/sil/', views.kayit_sil, name='kayit_sil'),
     path('arama/', views.arama_sonuc, name='arama_sonuc'),
     path('yorum-yap/', views.yorum_yap, name='yorum_yap'),
+    path('yorum_sil/<int:yorum_id>/', views.yorum_sil, name='yorum_sil'),
     path('esya/<int:id>/', views.esya_detay, name='esya_detay'),
+    path('bildirim-detay/<int:bildirim_id>/', views.bildirim_detay, name='bildirim_detay'),
+    path('bildirim-okundu/<int:bildirim_id>/', views.bildirim_okundu, name='bildirim_okundu'),
+    path('iletisim/', views.iletisim, name='iletisim'),
 ]

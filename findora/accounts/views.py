@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import CustomUserCreationForm , CustomLoginForm, ProfilFotoForm
-from kayip_esya.models import Kayit, GenelYorum
+from kayip_esya.models import Kayit, GenelYorum, Bildirim, ContactMessage
 from django.contrib.auth.decorators import login_required
 
 #Ana Sayfaya Dönme Fonksiyonu
@@ -53,6 +53,11 @@ def profilim(request):
     kaybettiklerim = Kayit.objects.filter(user=kullanici, kayit_turu='kaybettim')
     bulduklarim = Kayit.objects.filter(user=kullanici, kayit_turu='buldum')
     yorumlar = GenelYorum.objects.filter(user=kullanici).order_by('-tarih')  # Yorumları tarih sırasına göre sıralıyoruz
+    bildirimler = Bildirim.objects.filter(kullanici=kullanici).order_by('-olusturulma_tarihi')
+    kayip_bildirimler = Bildirim.objects.filter(kullanici=kullanici, kanit__isnull=False).order_by('-olusturulma_tarihi')
+    iletisim_mesajlari = ContactMessage.objects.filter(user=kullanici).order_by('-created_at')
+
+
 
     if request.method == 'POST':
         form = ProfilFotoForm(request.POST, request.FILES, instance=kullanici)
@@ -66,7 +71,11 @@ def profilim(request):
         "kaybettiklerim": kaybettiklerim,
         "bulduklarim": bulduklarim,
         "user": kullanici,
+        "form": form,
         "yorumlar": yorumlar,
+        "bildirimler": bildirimler,  # Zil için
+        "kayip_bildirimler": kayip_bildirimler,  # Sadece kayıp eşya bildirimleri için
+        "iletisim_mesajlari": iletisim_mesajlari,
     })
 
 @login_required
