@@ -20,6 +20,7 @@ class CustomUser(AbstractUser):     # Kullanıcı modelini özelleştiriyoruz.
     email = models.EmailField(unique=True)  
     birthdate = models.DateField(blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
 
     USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = ['username']  

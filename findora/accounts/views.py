@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import CustomUserCreationForm , CustomLoginForm
+from .forms import CustomUserCreationForm , CustomLoginForm, ProfilFotoForm
 from kayip_esya.models import Kayit, GenelYorum
 from django.contrib.auth.decorators import login_required
 
@@ -45,6 +45,7 @@ def user_logout(request):
     messages.success(request, 'Başarıyla çıkış yapıldı.')
     return redirect('home')
 
+
 @login_required
 def profilim(request):
     kullanici = request.user
@@ -53,6 +54,13 @@ def profilim(request):
     bulduklarim = Kayit.objects.filter(user=kullanici, kayit_turu='buldum')
     yorumlar = GenelYorum.objects.filter(user=kullanici).order_by('-tarih')  # Yorumları tarih sırasına göre sıralıyoruz
 
+    if request.method == 'POST':
+        form = ProfilFotoForm(request.POST, request.FILES, instance=kullanici)
+        if form.is_valid():
+            form.save()
+            return redirect('profilim')
+    else:
+        form = ProfilFotoForm(instance=kullanici)
 
     return render(request, "profilim.html", {
         "kaybettiklerim": kaybettiklerim,
@@ -60,3 +68,23 @@ def profilim(request):
         "user": kullanici,
         "yorumlar": yorumlar,
     })
+
+@login_required
+def profil_guncelle(request):
+    if request.method == 'POST':
+        user = request.user
+
+        user.full_name = request.POST.get('full_name')
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+
+        birthdate = request.POST.get('birthdate')
+        user.birthdate = birthdate if birthdate else None
+
+        if 'profile_pic' in request.FILES:
+            user.profile_photo = request.FILES['profile_pic']
+
+        user.save()
+        return redirect('profilim')
+
+    return redirect('profilim')

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, register, user_login, user_logout, profilim
+from .views import home, register, user_login, user_logout, profilim, profil_guncelle
 
 urlpatterns = [
     path('', home, name='home'),                    # Ana sayfa
@@ -7,4 +7,5 @@ urlpatterns = [
     path('login/', user_login, name='login'),       # Giriş yapma sayfası
     path('logout/', user_logout, name='logout'),    # Çıkış yapma sayfası
     path('profil/', profilim, name='profilim'),     # Profil sayfası
+    path('profil/guncelle/', profil_guncelle, name='profil_guncelle'),  # Profil güncelleme sayfası
 ]
