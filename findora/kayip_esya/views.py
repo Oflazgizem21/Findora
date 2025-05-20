@@ -13,6 +13,8 @@ def index(request):
     yorumlar = GenelYorum.objects.all().order_by('-tarih')   # Yorumları tarihe göre sıralıyoruz ve GenelYorum modelini kullanıyoruz
     return render(request, 'index.html', {'yorumlar': yorumlar})
 
+def premium_sayfasi(request):   # Premium sayfasına yönlendirme
+    return render(request, 'premium.html')
 
 @login_required
 def kayip_esya_bildir(request):
@@ -31,7 +33,11 @@ def kayit_olustur(request, tur):
             if tur == 'kaybettim':
                 kaybettim_sayisi = Kayit.objects.filter(user=request.user, kayit_turu='kaybettim').count()
                 if kaybettim_sayisi >= 3:
+                    messages.error(request, "Ücretsiz kullanıcılar en fazla 3 'Kaybettim' ilanı ekleyebilir.")
                     return redirect('premium_sayfasi')
+                
+                #kalan hakkı hesapla
+                request.session['kalan_kaybettim_hakki'] = max(3 - (kaybettim_sayisi+1), 0)
 
             # "Diğer" seçeneği için özelleştirme
             if request.POST.get('tur') == 'diger':
@@ -49,6 +55,16 @@ def kayit_olustur(request, tur):
 def kayit_duzenle(request, pk):
     kayit = get_object_or_404(Kayit, pk=pk, user=request.user)
     if request.method == 'POST':
+        post_data = request.POST.copy()
+
+        #Eğer "Diğer" seçeneği seçilmişse ve kullanıcı kutuya bir şey yazmışsa onu asıl alana ata
+        if post_data.get("tur") == "Diğer" and post_data.get("diger_tur"):
+            post_data["tur"] = post_data.get("diger_tur")
+
+        if post_data.get("renk") == "Diğer" and post_data.get("diger_renk"):
+            post_data["renk"] = post_data.get("diger_renk")
+
+
         form = KayitForm(request.POST, request.FILES, instance=kayit)
         if form.is_valid():
             form.save()
@@ -63,26 +79,35 @@ def kayit_sil(request, pk):
     kayit.delete()
     return redirect('profilim')
 
+#arama fonksiyonu
 @login_required
 def arama_sonuc(request):
     query = request.GET.get('q', '')
     renk = request.GET.get('renk', '')
     konum = request.GET.get('konum', '')
-    durum = request.GET.get('durum', 'buldum')
+    durum = request.GET.get('durum', 'buldum') # varsayılan olarak 'buldum' seçili
 
-    kayitlar = Kayit.objects.all()
+    # 'kaybettim' durumundaki kayıtları ASLA gösterme
+    kayitlar = Kayit.objects.exclude(kayit_turu='kaybettim')
 
-    if durum in ['buldum', 'bulundu']:
-        kayitlar = kayitlar.filter(kayit_turu=durum)
-
+    # Anahtar kelime varsa SADECE 'buldum' kayıtlarını filtrele
     if query:
         kayitlar = kayitlar.filter(
-            Q(tanim__icontains=query) |
-            Q(tur__icontains=query) |
-            Q(renk__icontains=query) |
-            Q(konum__icontains=query)
+            Q(kayit_turu='buldum') & (
+                Q(tanim__icontains=query) |
+                Q(tur__icontains=query) |
+                Q(renk__icontains=query) |
+                Q(konum__icontains=query)
+            )
         )
+    # Anahtar kelime yoksa durum filtresini uygula
+    elif durum in ['buldum', 'bulundu']:
+        kayitlar = kayitlar.filter(kayit_turu=durum)
 
+    # Kullanıcının kendi eklediği 'buldum' kayıtlarını gösterme
+    kayitlar = kayitlar.exclude(user=request.user, kayit_turu='buldum')
+
+    # Diğer filtreler
     if renk:
         kayitlar = kayitlar.filter(renk__icontains=renk)
     if konum:
@@ -187,4 +212,3 @@ def iletisim(request):
         form = ContactForm()
     
     return render(request, 'iletisim.html', {'form': form})
-

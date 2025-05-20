@@ -1,0 +1,64 @@
+body {
+            background-color: #f9f4ef;
+            background-image: url("images/arama_sonuc_arka_plan.png") no-repeat center center fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .geri-butonu {
+            margin: 20px 0;
+        }
+
+        .geri-butonu a {
+            text-decoration: none;
+            color: #6d4c41;
+            background-color: #fce4ec;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .geri-butonu a:hover {
+            background-color: #f8bbd0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #fff8f6;
+        }
+
+        .card-header {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            background-color: #f8bbd0;
+            color: white;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .resim {
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+
+        .btn-primary {
+            background-color: #e91e63;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #c2185b;
+        }

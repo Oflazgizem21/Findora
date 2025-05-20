@@ -45,19 +45,25 @@ def user_logout(request):
     messages.success(request, 'Başarıyla çıkış yapıldı.')
     return redirect('home')
 
-
 @login_required
 def profilim(request):
     kullanici = request.user
-    #Kullanıcının kaybettiği ve bulduğu eşyaları alıyoruz
+
+    # Kaybettim başvurularını say
+    kaybettim_sayisi = Kayit.objects.filter(user=kullanici, kayit_turu='kaybettim').count()
+    kalan_hak = max(3 - kaybettim_sayisi, 0)
+
+    session_hak = request.session.get('kalan_kaybettim_hakki')
+    if session_hak is not None:
+        kalan_hak = session_hak
+        del request.session['kalan_kaybettim_hakki']
+
     kaybettiklerim = Kayit.objects.filter(user=kullanici, kayit_turu='kaybettim')
     bulduklarim = Kayit.objects.filter(user=kullanici, kayit_turu='buldum')
     yorumlar = GenelYorum.objects.filter(user=kullanici).order_by('-tarih')  # Yorumları tarih sırasına göre sıralıyoruz
     bildirimler = Bildirim.objects.filter(kullanici=kullanici).order_by('-olusturulma_tarihi')
     kayip_bildirimler = Bildirim.objects.filter(kullanici=kullanici, kanit__isnull=False).order_by('-olusturulma_tarihi')
     iletisim_mesajlari = ContactMessage.objects.filter(user=kullanici).order_by('-created_at')
-
-
 
     if request.method == 'POST':
         form = ProfilFotoForm(request.POST, request.FILES, instance=kullanici)
@@ -75,6 +81,7 @@ def profilim(request):
         "yorumlar": yorumlar,
         "bildirimler": bildirimler,  # Zil için
         "kayip_bildirimler": kayip_bildirimler,  # Sadece kayıp eşya bildirimleri için
+        "kalan_kaybettim_hakki": kalan_hak,
         "iletisim_mesajlari": iletisim_mesajlari,
     })
 
