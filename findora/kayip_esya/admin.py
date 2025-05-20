@@ -1,7 +1,64 @@
 from django.contrib import admin
-from .models import ContactMessage, Bildirim
+from .models import Kayit, Kanit, ContactMessage, Bildirim
+from .forms import KayitForm, KanitForm
 from django.contrib.auth import get_user_model
 from django.utils.html import format_html
+
+@admin.register(Kanit)
+class KanitAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'status', 'kullanici_email', 'ilgili_kayit_tanim', 'ilgili_kayit_tur', 
+        'ilgili_kayit_renk', 'ilgili_kayit_konum', 'ilgili_kayit_resim', 
+        'secilen_esya_tanim', 'secilen_esya_tur', 'secilen_esya_renk',
+        'secilen_esya_konum', 'secilen_esya_resim', 'tarih'
+    )
+    list_filter = ('status', 'tarih')
+    search_fields = ('ilgili_kayit__tanim',)
+    readonly_fields = ('kullanici_email',)
+    exclude = ('aciklama',)
+    actions = ['onayla', 'reddet']
+
+    def kullanici_email(self, obj):
+        return obj.kullanici.email if obj.kullanici else "Belirtilmemiş"
+    def ilgili_kayit_tanim(self, obj):
+        return obj.ilgili_kayit.tanim
+    def secilen_esya_tanim(self, obj):
+        return obj.secilen_esya.tanim
+    def ilgili_kayit_tur(self, obj):
+        return obj.ilgili_kayit.tur
+    def secilen_esya_tur(self, obj):
+        return obj.secilen_esya.tur
+    def ilgili_kayit_renk(self, obj):
+        return obj.ilgili_kayit.renk
+    def secilen_esya_renk(self, obj):
+        return obj.secilen_esya.renk
+    def ilgili_kayit_konum(self, obj):
+        return obj.ilgili_kayit.konum
+    def secilen_esya_konum(self, obj):
+        return obj.secilen_esya.konum
+    def ilgili_kayit_resim(self, obj):
+        if obj.ilgili_kayit.resim:
+            return format_html('<img src="{}" width="50" />', obj.ilgili_kayit.resim.url)
+        return "Resim Yok"
+    def secilen_esya_resim(self, obj):
+        if obj.secilen_esya.resim:
+            return format_html('<img src="{}" width="50" />', obj.secilen_esya.resim.url)
+        return "Resim Yok"
+
+    def onayla(self, request, queryset):
+        queryset.update(status='approved')
+        self.message_user(request, "Seçilen kanıtlar onaylandı.")
+
+    def reddet(self, request, queryset):
+        queryset.update(status='rejected')
+        self.message_user(request, "Seçilen kanıtlar reddedildi.")
+
+@admin.register(Kayit)
+class KayitAdmin(admin.ModelAdmin):
+    form = KayitForm
+    list_display = ('tanim', 'tur', 'renk', 'kayit_turu', 'tarih')
+    search_fields = ('tanim', 'konum')
+
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
