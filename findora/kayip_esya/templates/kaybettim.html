@@ -15,7 +15,7 @@
             <i class="fas fa-chevron-left"></i>
         </a>
 
-        <h1 class="animate__animated animate__fadeInDown">Kaybettim</h1>
+        <h1 class="animate_animated animate_fadeInDown">Kaybettim</h1>
 
         <form method="post" enctype="multipart/form-data" class="form">
             {% csrf_token %}
@@ -60,20 +60,20 @@
                 {{ form.konum }}
             </div>
 
-            <!-- Resim -->
+           <!-- Eşya Resmi -->
+           <label for="id_location"><i class="fas fa-camera"></i> Görsel Ekle:</label>
             <div class="form-group file-input-container">
                 <label for="id_resim" class="custom-file-label">
-                 <i class="fas fa-file-arrow-down"></i> Dosya Seç
-                 </label>
+                    <i class="fas fa-file-arrow-down"></i> Dosya Seç
+                </label>
                 {{ form.resim }}
-                <span>Kaybettiğiniz eşyanın resmini buraya yükleyiniz..</span>
+                <span>Bulduğunuz eşyanın resmini buraya yükleyiniz..</span>
                 <div id="previewContainer" style="display: none; text-align: center;">
                  <img id="previewImage" style="margin: 1rem auto 0 auto; display: block; max-width: 150px; border-radius: 8px;" />
                  </div>
             </div>
-             
 
-            <button type="submit" class="btn animate__animated animate__pulse animate__infinite animate__slower">
+            <button type="submit" class="btn animate_animated animatepulse animateinfinite animate_slower">
                 <i class="fas fa-save"></i> Kaydet
             </button>
         </form>
@@ -83,68 +83,57 @@
         function toggleCustomInput(field) {
             const select = document.getElementById(`id_${field}`);
             const customBox = document.getElementById(`custom_${field}_box`);
-
-            if (select.value === 'diger') {
-                customBox.style.display = 'block';
-                customBox.querySelector('input').focus();
-                customBox.classList.add('animate__animated', 'animate__fadeIn');
-            } else {
-                customBox.style.display = 'none';
+            
+            if (select && customBox) {
+                if (select.value === 'diger') {
+                    customBox.style.display = 'block';
+                    customBox.querySelector('input')?.focus();
+                    customBox.classList.add('animate_animated', 'animate_fadeIn');
+                } else {
+                    customBox.style.display = 'none';
+                }
             }
         }
-
+    
         document.addEventListener('DOMContentLoaded', function () {
+            // Başlangıçta özel inputları kontrol et
             toggleCustomInput('tur');
             toggleCustomInput('renk');
-
-            // Animasyonlu inputlar
-            const inputs = document.querySelectorAll('input, select');
+    
+            // Inputlara odaklanınca animasyon ekle
+            const inputs = document.querySelectorAll('input, select, textarea');
             inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    input.parentElement.classList.add('animate__animated', 'animate__pulse');
+                input.addEventListener('focus', function () {
+                    this.parentElement?.classList.add('animate_animated', 'animate_pulse');
                 });
-                input.addEventListener('blur', () => {
-                    input.parentElement.classList.remove('animate__animated', 'animate__pulse');
+                input.addEventListener('blur', function () {
+                    this.parentElement?.classList.remove('animate_animated', 'animate_pulse');
                 });
             });
-
-            // Dosya etiketi
+    
+            // Dosya inputu işlemleri
             const fileInput = document.querySelector('input[type="file"]');
-            const fileLabel = document.querySelector('.custom-file-label');
-
-            if (fileInput) {
+            const fileLabel = document.querySelector('.custom-file-label') || fileInput?.previousElementSibling;
+    
+            if (fileInput && fileLabel) {
                 fileInput.addEventListener('change', function () {
                     if (this.files.length > 0) {
                         const fileName = this.files[0].name;
                         fileLabel.innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
                         fileLabel.style.color = '#20c997';
-                        fileLabel.classList.add('animate__animated', 'animate__bounceIn');
-                        setTimeout(() => fileLabel.classList.remove('animate__animated', 'animate__bounceIn'), 1000);
-                
-                        // 🔽 Burası görsel önizleme kısmı 🔽
-                        if (this.files && this.files[0]) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                const previewImage = document.getElementById('previewImage');
-                                const previewContainer = document.getElementById('previewContainer');
-                
-                                previewImage.src = e.target.result;
-                                previewContainer.style.display = 'block';
-                            };
-                            reader.readAsDataURL(this.files[0]);
-                        }
-                
                     } else {
                         fileLabel.innerHTML = `<i class="fas fa-file-arrow-down"></i> Dosya Seç`;
                         fileLabel.style.color = '';
-                        document.getElementById('previewContainer').style.display = 'none';
                     }
+    
+                    // Animasyon
+                    fileLabel.classList.add('animate_animated', 'animate_bounceIn');
+                    setTimeout(() => {
+                        fileLabel.classList.remove('animate_animated', 'animate_bounceIn');
+                    }, 1000);
                 });
-                
             }
         });
     </script>
-
-  <script src="{% static 'js/buldum-kaybettim.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,108 @@
+ body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fceae8, #f5f5dc);
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 2.5em;
+            color: #6a3f4d;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #4f3a40;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button-link {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background-color: #e2979c;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .button-link:hover {
+            background-color: #d86c7a;
+        }
+
+        .premium-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 50px 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #fff0f3;
+            border: 2px solid #f7cad0;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            padding: 25px;
+            width: 280px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.6em;
+            color: #b05d71;
+        }
+
+        .price {
+            font-size: 1.4em;
+            margin: 10px 0;
+            color: #7a4f57;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            color: #5c3a42;
+        }
+
+        .features li {
+            margin: 10px 0;
+        }
+
+        .select-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #e7a1af;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .select-button:hover {
+            background-color: #d16b86;
+        }
+
+        @media (max-width: 900px) {
+            .premium-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }

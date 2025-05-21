@@ -8,72 +8,113 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" href="{% static 'css/arama_sonuc.css' %}">
- </head>
+</head>
 
 <body>
 
   <div class="go-back">
-  <a href="javascript:history.back()">← Geri</a>
-</div>
+    <a href="{% url 'home' %}">← Geri</a>
+  </div>
 
   <!-- Filtre Toggle Butonu (Sadece mobilde görünür) -->
   <button id="toggleFilter" class="btn btn-info text-white d-md-none toggle-btn">Filtrele</button>
 
   <div class="main-wrapper">
-    <!-- Sabit Filtre Kutusu -->
-    <aside class="filter-card">
-      <form method="get">
+  <!-- Sabit Filtre Kutusu -->
+  <aside class="filter-card">
+    <form method="get" action="{% url 'arama_sonuc' %}">
+      <div class="form-group">
         <label for="keyword">Anahtar Kelime</label>
-        <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Kelime girin">
+        <input type="text" id="keyword" name="q" class="form-control" placeholder="Kelime girin" value="{{ request.GET.q }}">
+      </div>
 
+      <div class="form-group">
         <label for="durum">Durum</label>
         <select id="durum" name="durum" class="form-control">
-          <option selected>Seçiniz</option>
-          <option value="buldum">Buldum</option>
-          <option value="kaydettim">Bulundu</option>
+          <option value="buldum" {% if request.GET.durum == 'buldum' or not request.GET.durum %}selected{% endif %}>Buldum</option>
+          <option value="bulundu" {% if request.GET.durum == 'bulundu' %}selected{% endif %}>Bulundu</option>
         </select>
+      </div>
 
+      <div class="form-group">
         <label for="renk">Renk</label>
-        <input type="text" id="renk" name="renk" class="form-control">
+        <input type="text" id="renk" name="renk" class="form-control" placeholder="Renk girin" value="{{ request.GET.renk }}">
+      </div>
 
+      <div class="form-group">
         <label for="konum">Konum</label>
-        <input type="text" id="konum" name="konum" class="form-control">
+        <input type="text" id="konum" name="konum" class="form-control" placeholder="Konum girin" value="{{ request.GET.konum }}">
+      </div>
 
-        <button type="submit" class="btn btn-info text-white w-100">Filtrele</button>
-      </form>
-    </aside>
+      <div class="filter-buttons">
+        <button type="submit" class="btn btn-filter">Filtrele</button>
+        <a href="{% url 'arama_sonuc' %}" class="btn btn-clear">Temizle</a>
+      </div>
+    </form>
 
-    <!-- Kartlar Bölgesi -->
-    <main class="card-grid">
+    <!-- Durum Açıklamaları Kartı -->
+    <div class="card mt-3">
+      <div class="card-body">
+        <strong class="status-title">Durum Açıklamaları:</strong>
+        <p><strong>Buldum:</strong> Sahipsiz olarak bulduğun ve sisteme eklediğin kayıp eşyayı ifade eder.</p>
+        <p><strong>Bulundu:</strong> Talep üzerine sahibine ulaştırılan, teslim edilmiş eşyayı belirtir.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Kartlar Bölgesi -->
+  <main class="card-grid">
+    {% if kayitlar %}
       {% for kayit in kayitlar %}
-      <div class="card">
-        <img src="{{ kayit.resim.url }}" class="card-img-top" alt="...">
+      <div class="card animate__animated animate__fadeIn">
+        {% if kayit.yeni_mi %}
+  <div class="yeni-rozet">Yeni!</div>
+{% endif %}
+
+        {% if kayit.resim %}
+        <img src="{{ kayit.resim.url }}" class="card-img-top" alt="{{ kayit.tanim }}" loading="lazy">
+        {% endif %}
         <div class="card-body">
-          <p><strong>Durum:</strong> {{ kayit.durum }}</p>
-          <p><strong>Konum:</strong> {{ kayit.konum }}</p>
-          <p><strong>Renk:</strong> {{ kayit.renk }}</p>
-          <p><strong>Açıklama:</strong> {{ kayit.aciklama }}</p>
-          <a href="{% url 'esya_detay' kayit.id %}" class="btn-claim">Bu Eşya Benim!</a>
+          <h5 class="card-title">{{ kayit.tanim|truncatechars:30 }}</h5>
+          <div class="card-details">
+            <p><span class="detail-label">Durum:</span> {{ kayit.get_kayit_turu_display }}</p>
+            <p><span class="detail-label">Konum:</span> {{ kayit.konum }}</p>
+            <p><span class="detail-label">Renk:</span> {{ kayit.get_renk_display }}</p>
+            {% if kayit.aciklama %}
+            <p class="card-text"><span class="detail-label">Açıklama:</span> {{ kayit.aciklama|truncatechars:50 }}</p>
+            {% endif %}
+          </div>
+          {% if kayit.kayit_turu == 'buldum' %}
+            <a href="{% url 'esya_detay' kayit.id %}" class="btn-claim mt-auto">Bu Eşya Benim!</a>
+          {% else %}
+            <div class="delivered-badge mt-auto">Eşya Teslim Edildi</div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
-    </main>
+    {% else %}
+      <div class="no-results-message">
+        <div class="no-results-content">
+          <h3>Aradığınız kriterlerde eşya bulunamadı</h3>
+          <p>Filtrelerinizi genişleterek veya farklı anahtar kelimeler deneyerek tekrar arama yapabilirsiniz.</p>
+          <a href="{% url 'arama_sonuc' %}" class="btn-reset">Filtreleri Temizle</a>
+        </div>
+      </div>
+    {% endif %}
+  </main>
   </div>
-
-
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
   <script>
-  const toggleButton = document.getElementById('toggleFilter');
-  const filterCard = document.querySelector('.filter-card');
+    const toggleButton = document.getElementById('toggleFilter');
+    const filterCard = document.querySelector('.filter-card');
 
-  toggleButton.addEventListener('click', () => {
-    filterCard.classList.toggle('show');
-  });
-</script>
+    toggleButton.addEventListener('click', () => {
+      filterCard.classList.toggle('show');
+    });
+  </script>
 
 </body>
-
 </html>
