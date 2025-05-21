@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.username }} Profilim</title>
+    <title>{{ user.username }} | Profilim</title>
     <link rel="stylesheet" href="{% static 'css/profilim.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="profile-container">
         <!-- SOL TARAF - SIDEBAR -->
@@ -39,6 +40,13 @@
                         <span class="detail-label">Doğum Tarihi:</span>
                         <span class="detail-value">{{ user.birthdate|date:"d.m.Y"|default:"Belirtilmemiş" }}</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="kaybettim-hakki-alert">
+                <div class="alert alert-info ">
+                    <strong>Kalan "Kaybettim" Hakkınız:</strong>
+                    <span id="kalan-hak">{{ kalan_kaybettim_hakki }}</span> / 3
                 </div>
             </div>
 
@@ -229,22 +237,34 @@
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="comment-list">
                                 {% for yorum in yorumlar %}
-                                <div class="comment-item">
-                                    <div class="comment-header">
-                                        <span class="comment-badge bg-primary rounded-pill me-2">
-                                            {{ yorum.kayit.baslik|truncatechars:20 }}
-                                        </span>
-                                        <small class="text-muted">{{ yorum.tarih|date:"d.m.Y H:i" }}</small>
+                                    <div class="card shadow-sm mb-4 border-0 rounded-4" style="background: #f8fafd;">
+                                        <div class="card-body position-relative p-4">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <i class="fas fa-comment-dots fa-lg text-primary me-2"></i>
+                                                <span class="fw-semibold text-primary">{{ yorum.kayit.baslik|truncatechars:24 }}</span>
+                                                <small class="text-muted ms-auto">{{ yorum.tarih|date:"d.m.Y H:i" }}</small>
+                                            </div>
+                                            <blockquote class="user-message mb-3 ps-3 py-2 border-start border-4 border-primary bg-white rounded-3" style="font-size:1.07rem;">
+                                                <p class="mb-0 text-dark">{{ yorum.yorum }}</p>
+                                            </blockquote>
+                                            <div class="d-flex justify-content-end">
+                                                <form method="post" action="{% url 'yorum_sil' yorum.id %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                        <i class="fas fa-trash"></i> Yorumu Sil
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="comment-body">
-                                        <p>{{ yorum.yorum }}</p>
+                                {% empty %}
+                                    <div class="empty-state">
+                                        <i class="far fa-comment-dots fa-3x text-muted mb-3"></i>
+                                        <h5 class="text-muted">Henüz yorum yapmamışsınız</h5>
+                                        <p>Yaptığınız yorumlar burada görünecek</p>
                                     </div>
-                                    
-                                </div>
                                 {% endfor %}
                             </div>
                         {% else %}
@@ -347,6 +367,9 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
     <!-- Tüm Bildirimler Modalı -->
     <div class="modal fade" id="tumBildirimlerModal" tabindex="-1" aria-labelledby="tumBildirimlerModalLabel" aria-hidden="true">
@@ -379,7 +402,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
 
     <!-- Profil Güncelleme Modal -->
     <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">

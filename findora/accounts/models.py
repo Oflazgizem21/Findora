@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):     # Kullanıcı modelini özelleştiriyoruz.
     birthdate = models.DateField(blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    kaybettim_hakki = models.IntegerField(default=5)  # Kullanıcının kaybettiği hak sayısı
 
     USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = ['username']  

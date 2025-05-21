@@ -4,7 +4,6 @@ from .models import CustomUser
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-
 #Kullanıcı Kayıt Formu
 class CustomUserCreationForm(UserCreationForm):
     full_name = forms.CharField(
@@ -87,7 +86,6 @@ class CustomLoginForm(AuthenticationForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Şifre'})
     )        
-
 
 class ProfilFotoForm(forms.ModelForm):  # Profil fotoğrafı yükleme formu
     class Meta:

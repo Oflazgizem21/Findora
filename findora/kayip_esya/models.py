@@ -6,6 +6,8 @@ class Kayit(models.Model):
         ('canta', 'Çanta'),
         ('telefon', 'Telefon'),
         ('cuzdan', 'Cüzdan'),
+        ('anahtar', 'Anahtar'),
+        ('gozluk', 'Gözlük'),
         ('diger', 'Diğer'),
     ]
 
@@ -14,12 +16,18 @@ class Kayit(models.Model):
         ('beyaz', 'Beyaz'),
         ('mavi', 'Mavi'),
         ('kirmizi', 'Kırmızı'),
+        ('yesil', 'Yeşil'),
+        ('sari', 'Sarı'),
+        ('mor', 'Mor'),
+        ('pembe', 'Pembe'),
+        ('gri', 'Gri'),
         ('diger', 'Diğer'),
     ]
 
     KAYIT_TURU_CHOICES = [
         ('kaybettim', 'Kaybettim'),
         ('buldum', 'Buldum'),
+        ('bulundu', 'Bulundu'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # 🧍 kullanıcı alanı

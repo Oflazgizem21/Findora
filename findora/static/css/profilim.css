@@ -492,6 +492,23 @@ body {
     z-index: 9999; /* diğer elemanların üstünde kalsın */
 }
 
+/* Kaybettim hakkı alert'i */
+.kaybettim-hakki-alert {
+    margin-top: 15px;
+    padding: 0 10px;
+}
+
+.kaybettim-hakki-alert .alert {
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#kalan-kaybettim-hakki {
+    font-weight: bold;
+    color: #0d6efd; /* Mavi renk */
+}
+
 /* Özel stil dosyasına ekle */
 .message-cards {
   display: grid;
