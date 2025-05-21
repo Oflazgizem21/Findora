@@ -61,6 +61,11 @@ class Kanit(models.Model):
     def _str_(self):
         return f"Kanit - {self.kullanici.username if self.kullanici else 'Bilinmeyen'} - {self.ilgili_kayit.tanim}"
     
+    @property
+    def bulan_kisi(self):
+        return self.ilgili_kayit.user  # Bulunan eşyayı kaydeden kişi (bulduran)
+
+    
 class GenelYorum(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Kullanıcıyı bağlıyoruz
     yorum = models.TextField(verbose_name="Yorum", max_length=500)  # Yorumun içeriği
