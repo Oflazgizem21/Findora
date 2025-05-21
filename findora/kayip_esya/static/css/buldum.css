@@ -14,7 +14,7 @@
 }
 
 body {
-    background-image: url("/static/images/buldumarkaplan.png");
+    background-image: url("/static/images/buldumarkaplan.jpg");
     background-size: cover; /* Resmi ekranın tamamına yayar*/
     background-position: top left; /* Resmi ortalar */
     min-height: 100vh;
@@ -106,24 +106,53 @@ input:focus, select:focus, textarea:focus {
     transform: translateY(-2px);
 }
 
+/* Dosya yükleme alanı */
 .file-input-container {
     position: relative;
     padding: 1.5rem;
     border: 2px dashed #e9ecef;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
 }
 
 .file-input-container:hover {
-    border-color: var(--accent-color);
-    background-color: rgba(74, 107, 255, 0.05);
+    border-color: #1abc9c;
+    background-color: rgba(26, 188, 156, 0.05);
 }
 
-.file-input-container span {
-    display: block !important;
-    margin-top: 0.5rem;
+.custom-file-label {
+    display: inline-block;
+    background-color: #1abc9c;
     color: white !important;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.2);
+}
+
+.custom-file-label i {
+    margin-right: 8px;
+}
+
+.custom-file-label:hover {
+    background-color: #16a085;
+    color: white !important;
+}
+
+
+.file-input-container span {
+    display: block;
+    margin-top: 0.5rem;
+    color: rgba(255, 255, 255, 0.75);
     font-size: 0.9rem;
 }
 

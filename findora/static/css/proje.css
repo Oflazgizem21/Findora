@@ -401,6 +401,8 @@ body {
     scroll-behavior: smooth;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
+    align-items: center; /* İçerikleri dikeyde ortalar */
+    justify-content: center; /* Yatayda ortalar (boşsa) */
 }
 
 .testimonials-carousel::-webkit-scrollbar {
