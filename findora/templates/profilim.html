@@ -84,28 +84,58 @@
                     </button>
             
                     <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="bildirimDropdown">
-                        {% for bildirim in bildirimler|slice:":5" %}
+                        <!-- BULDURAN KİŞİNİN BİLDİRİMLERİ (YENİ EKLENEN) -->
+                        {% for bildirim in bildirimler|slice:":3" %}
                         <li class="notification-item">
-                            <div class="notification-content">
+                            <div class="notification-content {% if not bildirim.okundu %}bg-light{% endif %}">
                                 <a href="#" class="text-dark view-notification" 
                                 data-bildirim-id="{{ bildirim.id }}"
                                 data-bs-toggle="modal" 
                                 data-bs-target="#bildirimDetayModal">
-                                    <strong>{{ bildirim.mesaj }}</strong>
-                                    <small class="text-muted">{{ bildirim.olusturulma_tarihi|timesince }} önce</small>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <div>
+                                            <strong>{{ bildirim.mesaj }}</strong>
+                                            <small class="text-muted d-block">{{ bildirim.olusturulma_tarihi|timesince }} önce</small>
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
                         </li>
-                        {% empty %}
+                        {% endfor %}
+                        
+                        <!-- KAYBEDEN KİŞİNİN BİLDİRİMLERİ -->
+                        {% for bildirim in kayip_bildirimler|slice:":3" %}
+                        <li class="notification-item">
+                            <div class="notification-content {% if not bildirim.okundu %}bg-light{% endif %}">
+                                <a href="#" class="text-dark view-notification" 
+                                data-bildirim-id="{{ bildirim.id }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#bildirimDetayModal">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                                        <div>
+                                            <strong>{{ bildirim.mesaj }}</strong>
+                                            <small class="text-muted d-block">{{ bildirim.olusturulma_tarihi|timesince }} önce</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        {% endfor %}
+
+                        {% if bildirimler|length == 0 and kayip_bildirimler|length == 0 %}
                         <li class="notification-item">
                             <div class="notification-content">
                                 <span class="text-muted">Henüz bildiriminiz yok</span>
                             </div>
                         </li>
-                        {% endfor %}
-                        {% if bildirimler|length > 5 %}
+                        {% endif %}
+                        
+                        <!-- TÜMÜNÜ GÖRÜNTÜLE LİNKİ -->
+                        {% if bildirimler|length > 3 or kayip_bildirimler|length > 3 %}
                         <li class="notification-item view-all">
-                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#tumBildirimlerModal">Tümünü Görüntüle</a>
+                            <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#tumBildirimlerModal">Tümünü Görüntüle ({{ bildirimler|length|add:kayip_bildirimler|length }})</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -130,8 +160,8 @@
                         <button class="nav-link" id="yorum-tab" data-bs-toggle="tab" data-bs-target="#yorumlarim" type="button" role="tab">
                             <i class="fas fa-comments me-2"></i>Yorumlarım
                         </button>
-                    </li>
-                                        <li class="nav-item" role="presentation">
+                    </li>                    
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="bildirim-tab" data-bs-toggle="tab" data-bs-target="#bildirimler" type="button" role="tab">
                             <i class="fas fa-bell me-2"></i>Kayıp Eşya Bildirimlerim
                         </button>
@@ -612,8 +642,6 @@
                 }
             });
         });
-
-
     </script>
 </body>
 </html>
