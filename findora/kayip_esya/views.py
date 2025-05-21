@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from datetime import datetime
+from datetime import datetime, timedelta
 from .forms import KayitForm, YorumForm, ContactForm
 from .models import Kayit, GenelYorum, Kanit, Bildirim
 from django.contrib import messages
@@ -85,7 +85,7 @@ def arama_sonuc(request):
     query = request.GET.get('q', '')
     renk = request.GET.get('renk', '')
     konum = request.GET.get('konum', '')
-    durum = request.GET.get('durum', 'buldum') # varsayılan olarak 'buldum' seçili
+    durum = request.GET.get('durum', 'buldum')  # Varsayılan 'buldum'
 
     # 'kaybettim' durumundaki kayıtları ASLA gösterme
     kayitlar = Kayit.objects.exclude(kayit_turu='kaybettim')
@@ -112,10 +112,18 @@ def arama_sonuc(request):
         kayitlar = kayitlar.filter(renk__icontains=renk)
     if konum:
         kayitlar = kayitlar.filter(konum__icontains=konum)
-
+    
+    # Burada queryset'i listeye çeviriyoruz
+    kayitlar = list(kayitlar)
+      # Yeni kayıtları belirle
+    for kayit in kayitlar:
+        kayit.yeni_mi = (datetime.now().date() - kayit.tarih.date()) <= timedelta(days=3)
+        
+    # Yeni olanlar en üstte, sonra tarih azalan şekilde sırala
+    kayitlar = sorted(kayitlar, key=lambda x: (not x.yeni_mi, -x.tarih.timestamp()))
     return render(request, 'arama_sonuc.html', {
-        'query': query,
         'kayitlar': kayitlar,
+        'query': query,
     })
 
 @login_required
