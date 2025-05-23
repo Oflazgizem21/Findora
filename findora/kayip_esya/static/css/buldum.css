@@ -14,7 +14,7 @@
 }
 
 body {
-    background-image: url("/static/images/buldumarkaplan.jpg");
+    background-image: url("/static/images/buldum_arkaplan.jpg");
     background-size: cover; /* Resmi ekranın tamamına yayar*/
     background-position: top left; /* Resmi ortalar */
     min-height: 100vh;

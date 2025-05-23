@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="index.html" class="logo">Findora</a>
+        <a href="{% url 'home' %}" class="logo">Findora</a>
         <div class="nav-links">
             <a href="{% url 'home' %}">Ana Sayfa</a>
             <a href="{% url 'kayip_esya_bildir' %}">Kayıp Eşya Bildir</a>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="team-member">
-                <img src="{% static 'images/ozlem.jpg' %}" alt="Özlem Özdemirci" class="team-member-img">
+                <img src="{% static 'images/özlem.jpg' %}" alt="Özlem Özdemirci" class="team-member-img">
                 <h3>Özlem Özdemirci</h3>
                 <p>Frontend Geliştirici</p>
                 <div class="social-links">
