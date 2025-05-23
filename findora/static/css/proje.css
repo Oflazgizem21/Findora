@@ -16,7 +16,6 @@ body {
     line-height: 1.6;
 }
 
-/* Yeni Navbar Stili (Beyaz alt taban yok) */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -63,8 +62,6 @@ body {
     background-color: rgba(255, 158, 158, 0.1);
 }
 
-
-/* Profil Dropdown */
 .profile-container {
     position: relative;
     display: inline-block;
@@ -146,7 +143,6 @@ body {
     margin: 0.3rem 0;
 }
 
-/* Hero Bölümü */
 .hero {
     height: 100vh;
     display: flex;
@@ -167,7 +163,6 @@ body {
     margin-top: 80px;
 }
 
-/* Diğer stiller aynı kalıyor... */
 .hero h1 {
     font-size: 4rem;
     font-weight: 350;
@@ -183,7 +178,7 @@ body {
 }
 
 .hero-search {
-    width: 15cm; /* Tam 15cm genişlik */
+    width: 15cm;
     margin: 2rem auto 0;
 }
 
@@ -192,7 +187,7 @@ body {
     border-radius: 50px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    width: 100%; /* Container'ın tam genişliğini kaplasın */
+    width: 100%;
 }
 
 .search-input {
@@ -220,111 +215,6 @@ body {
 
 .search-btn:hover {
     background: #ff8a8a;
-}
-
-@media (max-width: 768px) {
-    .hero-search {
-        width: 80%; /* Mobilde biraz daha geniş olsun */
-        max-width: 15cm; /* Maksimum 15cm'yi geçmesin */
-    }
-    
-    .search-box {
-        flex-direction: column;
-        border-radius: 20px;
-    }
-    
-    .search-btn {
-        padding: 0.8rem;
-        justify-content: center;
-    }
-}
-.cta-group {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: flex-start; /* Bu satırı ekleyin */
-    margin-left: -100px; /* ARAMA CUBUGU SOLA KAYMAİsteğe bağlı: Daha fazla sola çekmek için */
-}
-
-.cta-primary, .cta-secondary {
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.cta-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-    box-shadow: 0 10px 20px rgba(255, 158, 158, 0.3);
-}
-
-.cta-secondary {
-    background: white;
-    border: 1px solid white;
-    color: var(--primary);
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    min-width: 180px; /* Sabit genişlik */
-    height: 40px; /* Arama butonuyla aynı yükseklik */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    margin-right: auto; /* Butonu sola yaslar */
-    margin-left: -20px; /* 20px daha sola çeker */
-}
-
-.cta-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(255, 158, 158, 0.4);
-}
-
-.cta-secondary:hover {
-    background: rgba(255, 158, 158, 0.1);
-    border-color: var(--primary);
-    color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 158, 158, 0.2);
-}
-
-.cta-secondary i {
-    transition: transform 0.3s;
-}
-
-.cta-secondary:hover i {
-    transform: scale(1.1);
-}
-
-/* Mobil Uyum */
-@media (max-width: 768px) {
-    .cta-group {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .hero-search {
-        width: 100%;
-        margin: 2rem 0 0; /* 'auto' yerine '0' yaparak sola yasladık */
-    }
-    
-    .cta-secondary {
-        margin-left: 0; /* Mobilde kaydırmayı sıfırla */
-        transform: none;
-    }
-}
-
-.features {
-    padding: 8rem 5%;
-    background: white;
 }
 
 .features-grid {
@@ -364,12 +254,11 @@ body {
     color: var(--primary);
 }
 
-/* Kullanıcı Yorumları Stilleri */
 .testimonials {
     padding: 5rem 5%;
     background: white;
     text-align: center;
-    }
+}
 
 .testimonials-header {
     max-width: 800px;
@@ -399,14 +288,14 @@ body {
     padding: 1rem;
     overflow-x: auto;
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-    align-items: center; /* İçerikleri dikeyde ortalar */
-    justify-content: center; /* Yatayda ortalar (boşsa) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    align-items: center;
+    justify-content: center;
 }
 
 .testimonials-carousel::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
 }
 
 .testimonial-card {
@@ -475,7 +364,7 @@ body {
 }
 
 .star.filled {
-    color: #FFD700; /* Altın rengi */
+    color: #FFD700;
 }
 
 .empty-testimonials {
@@ -545,37 +434,18 @@ body {
     margin-right: 8px;
 }
 
-/* SSS Bölümü */
-.sss-section {
-    background-color: var(--bg);
-    padding: 4rem 0;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.sss-title {
-    text-align: center;
-    font-size: 2rem;
-    color: var(--text);
-    margin-bottom: 2rem;
-    font-weight: 600;
-}
-
-.sss-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 .sss-item {
-    margin-bottom: 1rem;
-    border-radius: 12px;
+    margin-bottom: 15px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(168, 159, 148, 0.1);
+    box-shadow: 0 5px 15px rgba(255, 158, 158, 0.1);
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 158, 158, 0.2);
 }
 
 .sss-question {
     width: 100%;
-    padding: 1.5rem;
+    padding: 20px 25px;
     text-align: left;
     background: white;
     border: none;
@@ -583,22 +453,16 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text);
+    font-weight: 600;
+    color: #3A3845;
     cursor: pointer;
     transition: all 0.3s;
 }
 
-.sss-question:hover {
-    background-color: #f9f9f9;
-}
-
 .sss-question i {
+    color: #FF9E9E;
     transition: transform 0.3s;
-}
-
-.sss-item.active .sss-question i {
-    transform: rotate(180deg);
+    font-size: 0.9rem;
 }
 
 .sss-answer {
@@ -606,19 +470,17 @@ body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    padding: 0 1.5rem; /*Cevap iç boşluğu*/
 }
 
-.sss-item.active .sss-answer {
-    max-height: 300px;
-    padding-bottom: 1.5rem; /*Açıkken iç boşluğu*/
+.sss-answer div {
+    padding: 0 25px 20px;
 }
 
 .sss-answer p {
-    padding: 0 1.5rem 1.5rem;
+    color: #888094;
+    line-height: 1.7;
     margin: 0;
-    color: var(--light-text);
-    line-height: 1.6;
+    padding: 20px 0 0;
 }
 
 footer {
@@ -662,10 +524,6 @@ footer {
     color: white;
 }
 
-html {
-    scroll-behavior: smooth; /* Yumuşak kaydırma efekti */
-  }
-
 .social-links {
     display: flex;
     gap: 1rem;
@@ -688,4 +546,37 @@ html {
     border-top: 1px solid rgba(255,255,255,0.1);
     color: #aaa;
     font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .hero-search {
+        width: 80%;
+        max-width: 15cm;
+    }
+    
+    .search-box {
+        flex-direction: column;
+        border-radius: 20px;
+    }
+    
+    .search-btn {
+        padding: 0.8rem;
+        justify-content: center;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .nav-links {
+        gap: 1rem;
+    }
+}
+
+html {
+    scroll-behavior: smooth; /* Yumuşak kaydırma efekti */
 }
