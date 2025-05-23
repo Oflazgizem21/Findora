@@ -29,15 +29,15 @@ def kayit_olustur(request, tur):
             kayit.user = request.user
             kayit.kayit_turu = tur
 
-            # 🔒 Kayıp eşyalar için en fazla 3 kayıt sınırı
             if tur == 'kaybettim':
-                kaybettim_sayisi = Kayit.objects.filter(user=request.user, kayit_turu='kaybettim').count()
-                if kaybettim_sayisi >= 3:
-                    messages.error(request, "Ücretsiz kullanıcılar en fazla 3 'Kaybettim' ilanı ekleyebilir.")
+                # Model alanını kullanarak kontrol ediyoruz
+                if request.user.kaybettim_hakki <= 0:
+                    messages.error(request, "Kaybettim hakkınız kalmadı!")
                     return redirect('premium_sayfasi')
                 
-                #kalan hakkı hesapla
-                request.session['kalan_kaybettim_hakki'] = max(3 - (kaybettim_sayisi+1), 0)
+                # Hakkı 1 azalt
+                request.user.kaybettim_hakki -= 1
+                request.user.save()
 
             # "Diğer" seçeneği için özelleştirme
             if request.POST.get('tur') == 'diger':
@@ -76,6 +76,16 @@ def kayit_duzenle(request, pk):
 @login_required
 def kayit_sil(request, pk):
     kayit = get_object_or_404(Kayit, pk=pk, user=request.user)
+    
+    # Eğer silinen kayıt 'kaybettim' türündeyse, hakkı geri ver
+    if kayit.kayit_turu == 'kaybettim':
+        # F() fonksiyonu yerine direkt değeri alıp artırıyoruz
+        request.user.kaybettim_hakki += 1
+        request.user.save()
+        messages.success(request, f"Kayıt silindi ve 1 'kaybettim' hakkınız iade edildi! (Toplam hak: {request.user.kaybettim_hakki})")
+    else:
+        messages.success(request, "Kayıt başarıyla silindi")
+    
     kayit.delete()
     return redirect('profilim')
 
@@ -182,6 +192,7 @@ def profilim(request):
     
     context = {
         'bildirimler': bildirimler,
+        'kaybettim_hakki': request.user.kaybettim_hakki,  # Bu satırı ekledik
         # varsa diğer context verilerini de ekle
     }
     return render(request, 'profilim.html', context)

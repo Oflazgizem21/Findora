@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Kayıt Düzenle</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, rgba(255,228,225,0.6), rgba(245,245,220,0.6));
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.85);
+            margin-top: 60px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #a0526d;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #5c4b51;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.6);
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #c97b95;
+            box-shadow: 0 0 8px rgba(201, 123, 149, 0.4);
+        }
+
+        #diger-alani {
+            display: none;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 12px;
+            background-color: #f7c6c7;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e699a1;
+        }
+
+        .back-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #c97b95;
+            font-weight: bold;
+        }
+
+        .back-link img {
+            width: 30px;
+            height: 30px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kayıt Düzenle</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="id_tanim">Eşya Tanımı:</label>
+            {{ form.tanim }}
+            
+            <label for="id_tur">Eşya Türü:</label>
+            {{ form.tur }}
+
+            <div id="diger-tur-alani" style="display: none;">   
+                <label for="id_diger_tur">Lütfen eşya türünü belirtiniz:</label>
+                <input type="text" name="custom_tur" id="id_diger_tur" placeholder="Eşya türü girin...">
+            </div>
+            
+            <label for="id_renk">Eşya Rengi:</label>
+            {{ form.renk }}
+
+            <div id="diger-alani">
+                <label for="id_diger_renk">Lütfen eşya rengini belirtiniz:</label>
+                <input type="text" name="custom_renk" id="id_diger_renk" placeholder="Renk girin...">
+            </div>
+
+            
+            <label for="id_konum">Konum:</label>
+            {{ form.konum }}
+            
+            <label>Eşya Resmi:</label>
+            {% if form.resim.value %}
+                <div style="margin: 10px 0;">
+                    <img src="{{ form.resim.value.url }}" alt="Eşya resmi" style="max-width: 200px; max-height: 200px; border-radius: 10px;">
+                </div>
+            {% endif %}
+            {{ form.resim }}
+            
+
+            
+
+            <button type="submit">Kaydet</button>
+        </form>
+
+        <a href="{% url 'profilim' %}" class="back-link">
+            <img src="{% static 'images/back-icon.png' %}" alt="Geri Dön">
+            Geri dön
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var turSelect = document.getElementById('id_tur');
+            var digerTur = document.getElementById('diger-tur-alani');
+
+            if (turSelect) {
+                turSelect.addEventListener('change', function() {
+                    if (this.value === "Diğer" || this.value === "diger") {
+                        digerTur.style.display = 'block';
+                    } else {
+                        digerTur.style.display = 'none';
+                    }
+                });
+
+                // Sayfa yüklendiğinde kontrol et
+                if (turSelect.value === "Diğer" || turSelect.value === "diger") {
+                    digerTur.style.display = 'block';
+                }
+            }
+
+            var renkSelect = document.getElementById('id_renk');
+            var digerRenk = document.getElementById('diger-alani');
+
+            if (renkSelect) {
+                renkSelect.addEventListener('change', function() {
+                    if (this.value === "Diğer" || this.value === "diger") {
+                        digerRenk.style.display = 'block';
+                    } else {
+                        digerRenk.style.display = 'none';
+                    }
+                });
+
+                // Sayfa yüklendiğinde kontrol et
+                if (renkSelect.value === "Diğer" || renkSelect.value === "diger") {
+                    digerRenk.style.display = 'block';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
